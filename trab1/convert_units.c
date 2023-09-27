@@ -14,6 +14,18 @@ bool validarUnidades(int unidade){
 return true;
 	
 	}
+	
+
+//Função que verifica se um número é inteiro ou não
+bool verificarInteiro(double n){
+	
+	int aux;
+	aux = n; //Passa para a variável aux apenas a parte inteira de n
+	
+	if(n == aux){return true;}
+	else{return false;}
+	
+	}
 
 
 int main(){
@@ -80,8 +92,19 @@ int main(){
 							valor = valor*10;
 						
 							}
+						
+						if(verificarInteiro(valor) == true){	//Se o valor for inteiro
 							
-						printf("O valor final é: %lf",valor);
+							int valor_inteiro = valor;			//Transformamos este num inteiro para apresentar ao utilizador
+							printf("O valor final é: %d",valor_inteiro);
+							
+							}
+						
+						else{
+							
+							printf("O valor final é: %lf",valor);
+							
+							}
 					
 						}
 					
@@ -93,28 +116,28 @@ int main(){
 							
 							valor = valor/10;
 							
-							}
+						}
+						
+						if(verificarInteiro(valor) == true){
+							
+							int valor_inteiro = valor;			//Transformamos este num inteiro para apresentar ao utilizador
+							printf("O valor final é: %d",valor_inteiro);
+							
+						}
+						
+						else{
+							
+						printf("O valor final é: %lf",valor);
+						
+						}
 					
 						}
 						
-					printf("O valor final é: %lf",valor);
+
 				
 					}
 				
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			}
 		
