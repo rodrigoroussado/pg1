@@ -1,41 +1,123 @@
 #include <stdio.h>
+#include <stdbool.h>
 
+//Função que valida as unidades de medida selecionadas
+bool validarUnidades(int unidade){
+	
+	if(unidade < 1 || unidade > 7){
+		
+		printf("Unidade inválida!\n");
+		return false;
+		
+		}
+		
+return true;
+	
+	}
 
 
 int main(){
 	
-	double n;
-	int uni_inicial, uni_final;
+	//Declarar variáveis
+	double valor;
+	int uni_inicial,uni_final,fator_mult;
 	
+	//Apresentar o programa
+	printf("Programa que lê um valor numa certa unidade e o converte para outra unidade selecionada.\n");
 	
-	// Apresenta o propósito do programa
-	printf("Lê um valor e converte-o para qualquer unidade de comprimento (mm,cm,dm,m,dam,hm.km)\n");
-	printf("Escreva um número de 1-7 para definir a unidade inicial e a unidade para a qual pretende converter!\n");
-	printf("1 = mm, 2 = cm, 3 = dm, 4 = m, 5 = dam, 6 = hm, 7 = km \n");
-	
-	//Pede o Valor
-	printf("\nInsira o valor: ");
-	scanf("%lf",&n);
-	
-	//Pede a unidade Inicial e Valida
-	printf("\nInsira a unidade do valor inicial: ");
-	if (scanf("%d",&uni_inicial)!=1 || (uni_inicial <= 0 || uni_inicial >= 8)){
+	//Receber valor (e validar scanf)
+	printf("Insira o valor a converter: ");
+	if( scanf("%lf",&valor)!=1 ){
 		
-		printf("Unidade inicial Inválida");
-																				
-	}
-		
-	else {
-	//Pede a Unidade Final e Valida
-	printf("\nInsira a unidade para o valor final: ");
-		if (scanf("%d",&uni_final) !=1 || (uni_inicial <= 0 || uni_inicial >= 8)){
-		
-			printf("Unidade final Inválida");
+		printf("Erro de leitura do valor!\n");
 		
 		}
+		
+	else{
+		
+		//Receber unidade de medida inicial (e validar scanf)
+		printf("Insira a unidade inicial: ");
+		if( scanf("%d",&uni_inicial)!=1 ){
+			
+			printf("Erro de leitura da unidade inicial!\n");
+			
+			}
+		
+		else{
+			
+			//Receber unidade de medida final (e validar scanf)
+			printf("Insira a unidade final: ");
+			if( scanf("%d",&uni_final)!=1 ){
+				
+				printf("Erro de leitura da unidade final!\n");
+				
+				}
+				
+			
+			else{
+				
+				//Validar as unidades (se estão dentro das opções de unidades existentes)
+				validarUnidades(uni_inicial);
+				validarUnidades(uni_final);
+				
+				//Calcular a diferença entre as unidades final e inicial (se a diferença for 0, o resultado é igual ao valor inserido inicialmente)
+				fator_mult = uni_final - uni_inicial;
+				if(fator_mult == 0){
+					
+					printf("O resultado é: %0.4lf", valor);
+					
+					}
+				
+				else{
+					//Converter o valor da unidade inicial para a final
+				
+					//Se a unidade final for maior que a inicial - faz divisão
+					if(fator_mult < 0){
+					
+						fator_mult = fator_mult * (-1);
+						for(int i=0 ; i!= fator_mult ; i++){
+						
+							valor = valor*10;
+						
+							}
+							
+						printf("O valor final é: %lf",valor);
+					
+						}
+					
+					else{
+					
+					//Se a unidade final for menor que a inicial
+					
+						for(int i=0 ; i!=fator_mult ; i++){
+							
+							valor = valor/10;
+							
+							}
+					
+						}
+						
+					printf("O valor final é: %lf",valor);
+				
+					}
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			}
+		
+		}
+	
 	}
-	
-	
-	
-	
-}
