@@ -1,146 +1,82 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
-//Função que valida as unidades de medida selecionadas
-bool validarUnidades(int unidade){
+//Função que encontra a solução de i²+i-n = 0
+double zerosSegundoGrau(int a, int b, int c, double *z1, double *z2){
+	// a = 1; b = 1; c = -n
 	
-	if(unidade < 1 || unidade > 7){
+	
+	
+	double aux = (b*b)-4*a*c;
+	if(aux < 0){return false;}
 		
-		printf("Unidade inválida!\n");
-		return false;
+	*z1 = (-b + sqrt(aux))/2*a;
+	*z2 = (-b - sqrt(aux))/2*a;
+	
+}
+
+	
+
+
+//Função que retorna true se um número for oblongo
+bool is_oblong(int n){
+	
+	int i = 0;
+	double z1, z2;
+	
+	if(n < 0){return false;}
+	else{
+		
+		if(n%2 != 0){return false;}
+		else{
+			
+			if( i*i + i > n){return false;}
+			else{
+				
+				zerosSegundoGrau(1,1,-n,&z1,&z2);
+
+				for(int i = 0; i <= n; i++){
+		
+					if( z1 == 0 || z2 == 0){  //Se a função retornar 0: é oblongo!
+			
+						return true;
+						break;
+			
+						}
+		
+					return false;
+		
+					}
+				
+				}
+			
+			}
 		
 		}
-		
-return true;
-	
-	}
-	
 
-//Função que verifica se um número é inteiro ou não
-bool verificarInteiro(double n){
-	
-	int aux;
-	aux = n; //Passa para a variável aux apenas a parte inteira de n
-	
-	if(n == aux){return true;}
-	else{return false;}
-	
-	}
+}
 
 
 int main(){
 	
-	//Declarar variáveis
-	double valor;
-	int uni_inicial,uni_final,fator_mult;
-	
-	//Apresentar o programa
-	printf("Programa que lê um valor numa certa unidade e o converte para outra unidade selecionada.\n");
-	
-	//Receber valor (e validar scanf)
-	printf("Insira o valor a converter: ");
-	if( scanf("%lf",&valor)!=1 ){
-		
-		printf("Erro de leitura do valor!\n");
-		
-		}
-		
-	else{
-		
-		//Receber unidade de medida inicial (e validar scanf)
-		printf("Insira a unidade inicial: ");
-		if( scanf("%d",&uni_inicial)!=1 ){
-			
-			printf("Erro de leitura da unidade inicial!\n");
-			
-			}
-		
-		else{
-			
-			//Receber unidade de medida final (e validar scanf)
-			printf("Insira a unidade final: ");
-			if( scanf("%d",&uni_final)!=1 ){
-				
-				printf("Erro de leitura da unidade final!\n");
-				
-				}
-				
-			
-			else{
-				
-				//Validar as unidades (se estão dentro das opções de unidades existentes)
-				validarUnidades(uni_inicial);
-				validarUnidades(uni_final);
-				
-				//Calcular a diferença entre as unidades final e inicial (se a diferença for 0, o resultado é igual ao valor inserido inicialmente)
-				fator_mult = uni_final - uni_inicial;
-				if(fator_mult == 0){
-					
-					printf("O resultado é: %0.4lf", valor);
-					
-					}
-				
-				else{
-					//Converter o valor da unidade inicial para a final
-				
-					//Se a unidade final for maior que a inicial - faz divisão
-					if(fator_mult < 0){
-					
-						fator_mult = fator_mult * (-1);
-						for(int i=0 ; i!= fator_mult ; i++){
-						
-							valor = valor*10;
-						
-							}
-						
-						if(verificarInteiro(valor) == true){	//Se o valor for inteiro
-							
-							int valor_inteiro = valor;			//Transformamos este num inteiro para apresentar ao utilizador
-							printf("O valor final é: %d",valor_inteiro);
-							
-							}
-						
-						else{
-							
-							printf("O valor final é: %lf",valor);
-							
-							}
-					
-						}
-					
-					else{
-					
-					//Se a unidade final for menor que a inicial
-					
-						for(int i=0 ; i!=fator_mult ; i++){
-							
-							valor = valor/10;
-							
-						}
-						
-						if(verificarInteiro(valor) == true){
-							
-							int valor_inteiro = valor;			//Transformamos este num inteiro para apresentar ao utilizador
-							printf("O valor final é: %d",valor_inteiro);
-							
-						}
-						
-						else{
-							
-						printf("O valor final é: %lf",valor);
-						
-						}
-					
-						}
-						
+//Declarar variáveis
+	int n;
 
-				
-					}
-				
-			}
+
+//Apresentar o programa
+	printf("Programa que indica se um número é oblongo.\n");
+	printf("Digite número e termine com um caractere não dígito:\n");
+
+//While loop (pede um número ao utilizador até este terminar com um caractere não dígito
+	while(scanf("%d",&n) == 1){
+		
+		if(is_oblong(n) == true){
+			
+			printf("É oblongo\n");
 			
 			}
 		
 		}
-	
-	}
+
+}
