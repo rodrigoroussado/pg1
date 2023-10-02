@@ -4,4 +4,4 @@
 - Este repositório contém:
   - Exemplos dados nas aulas da cadeira de Programação I;
   - Ficheiros dos trabalhos realizados ao longo do ano;
-  - Anunciados dos trabalhos práticos;
+  - Enunciados dos trabalhos práticos;
