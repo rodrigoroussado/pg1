@@ -1,6 +1,8 @@
 //Um programa que recebe um caractere e determina se este é digito, letra ou outro
 //Caso seja um dígito, determina o seu dobro e, caso seja uma letra mostra o seu correspondente em minúscula (se for maiúscula) ou vice-versa
 
+//Um char é um "inteiro pequeno" (1 byte - 8 bits) -> já que apenas codifica os códigos dos caracteres
+
 int main(){
 
 		char c;
