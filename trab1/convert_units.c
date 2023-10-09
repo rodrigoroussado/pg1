@@ -65,6 +65,75 @@ int main(){
 						else{
 							
 							//Calcular a diferença entre a unidade final e a inicial
+							fator_mult = uni_final - uni_inicial;
+							
+							//Caso em que uni_inicial = uni_final
+							if(fator_mult == 0){
+								
+								if(verificarInteiro(valor) == true){
+									
+									int valor_inteiro = valor;
+									printf("O valor final é: %d",valor_inteiro);
+									
+									}
+									
+								else{printf("O valor final é: %0.4lf",valor);}
+								
+								}
+								
+								
+							else{
+								
+								//Caso em que uni_inicial < uni_final (fator_mult positivo)
+								if(fator_mult > 0){
+									
+									for(int i=0 ; i!= fator_mult ; i++){
+						
+										valor = valor/10;
+						
+										}
+									
+									if(verificarInteiro(valor) == true){
+										
+										int valor_inteiro = valor;						 //Transformamos este num inteiro para apresentar ao utilizador
+										printf("O valor final é: %d",valor_inteiro);
+										
+										}
+										
+									else{printf("O valor final é: %0.4lf",valor);} 		//Apresentamo-lo como double		
+									
+									}
+									
+									
+								else{
+									
+									//Caso em que uni_inicial > uni_final (fator_mult negativo)
+									if(fator_mult < 0){
+										
+										fator_mult = fator_mult * (-1);
+										for(int i=0 ; i!= fator_mult ; i++){
+						
+											valor = valor*10;
+						
+										}
+									
+									if(verificarInteiro(valor) == true){
+										
+										int valor_inteiro = valor;
+										printf("O valor final é: %d",valor_inteiro);
+										
+										}
+										
+									else{printf("O valor final é: %0.4lf",valor);}
+										
+									}
+									
+								}
+								
+								
+								}	
+								
+								
 							
 							
 							}
