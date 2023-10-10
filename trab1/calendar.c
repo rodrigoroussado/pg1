@@ -11,27 +11,35 @@ int AnoBissexto (int ano) {
 // Função para determinar o número de dias em um mês
 int diasDoMes(int mes, int ano) {
    
-    int dias[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // começa com 0 para nao termos de subtrair ao mes 1
-    
-    if (mes == 2 && AnoBissexto(ano)) {
-        return 29;
-   
-    }
-    else{return dias[mes];}
+		if( mes == 2 && AnoBissexto(ano) ){return 29;}
+		else{
 	
+			switch(mes){
+	
+				case 2: return 28; break;
+				case 4:
+				case 6:
+				case 9:
+				case 11: return 30; break;
+				default: return 31;
+	
+			}
+	
+		}
+
 }
 
 int main() {
     int ano, mes, diaDaSemana;
     
     //Apresentar o programa
-    printf("Este programa escrve todo o calendário de um Ano a partir do mês que escolher!\n ");
+    printf("Este programa escrve todo o calendário de um ano a partir do mês que escolher!\n ");
 
     // Solicita o ano, mês inicial e dia da semana
-    printf("Digite o ano: ");
+    printf("Insira o ano: ");
     scanf("%d", &ano);
 
-    printf("Digite o mês inicial (1-12): ");
+    printf("Insira o mês inicial (1-12): ");
     scanf("%d", &mes);
 
     printf("0-Dom, 1-Seg, 2-Ter, 3-Qua, 4-Qui, 5-Sex, 6-Sáb \n Digite o dia da semana: ");
@@ -42,7 +50,7 @@ int main() {
     // Validação dos valores de entrada
     if (ano < 0 || mes < 1 || mes > 12 || diaDaSemana < 0 || diaDaSemana > 6) {
         printf("Dados inválidos.\n");
-        return 1;
+        return 1;		// Significa que ocorreu um problema na execução (dados inválidos)
     }
 
     // Escreve o cabeçalho do calendário
@@ -79,5 +87,5 @@ int main() {
         mes++;
     }
 
-    return 0;
+    return 0;	//Sgnifica que correu sem problemas
 }
