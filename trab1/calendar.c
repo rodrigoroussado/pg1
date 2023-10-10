@@ -70,24 +70,24 @@ int main(){
 
 			switch(mes){
 		
-				case 1: printf("\nJaneiro %d:\n",ano); break;
-				case 2: printf("\nFevereiro %d:\n",ano); break;
-				case 3: printf("\nMarço %d:\n",ano); break;
-				case 4: printf("\nAbril %d:\n",ano); break;
-				case 5: printf("\nMaio %d:\n",ano); break;
-				case 6: printf("\nJunho %d:\n",ano); break;
-				case 7: printf("\nJulho %d:\n",ano); break;
-				case 8: printf("\nAgosto %d:\n",ano); break;
-				case 9: printf("\nSetembro %d:\n",ano); break;
-				case 10: printf("\nOutubro %d:\n",ano); break;
-				case 11: printf("\nNovembro %d:\n",ano); break;
-				case 12: printf("\nDezembro %d:\n",ano); break;
+				case 1: printf("\n\nJaneiro %d:\n",ano); break;
+				case 2: printf("\n\nFevereiro %d:\n",ano); break;
+				case 3: printf("\n\nMarço %d:\n",ano); break;
+				case 4: printf("\n\nAbril %d:\n",ano); break;
+				case 5: printf("\n\nMaio %d:\n",ano); break;
+				case 6: printf("\n\nJunho %d:\n",ano); break;
+				case 7: printf("\n\nJulho %d:\n",ano); break;
+				case 8: printf("\n\nAgosto %d:\n",ano); break;
+				case 9: printf("\n\nSetembro %d:\n",ano); break;
+				case 10: printf("\n\nOutubro %d:\n",ano); break;
+				case 11: printf("\n\nNovembro %d:\n",ano); break;
+				case 12: printf("\n\nDezembro %d:\n",ano); break;
 		
 			}
 
 
         // Escreve os nomes dos dias da semana
-        printf("Dom Seg Ter Qua Qui Sex Sáb\n");
+        printf("  D   S   T   Q   Q   S   S\n");
 
         // Escreve espaços para alinhar com os dias da semana
         for (int i = 0; i < diaDaSemana; i++) {
@@ -103,6 +103,7 @@ int main(){
             if (diaDaSemana == 0) {
                 printf("\n");
             }
+            
         }
 
         // Passa ao próximo mês
