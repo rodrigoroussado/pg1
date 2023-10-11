@@ -14,7 +14,7 @@ bool AnoBissexto(int ano){
 // Função para determinar o número de dias em um mês
 int diasDoMes(int mes, int ano) {
    
-		if( mes == 2 && AnoBissexto(ano) ){return 29;}		//Fevereiro (anos bissextos)
+		if( mes == 2 && AnoBissexto(ano) ){return 29;}		//Fevereiro (ano bissexto)
 		else{
 	
 			switch(mes){
