@@ -1,3 +1,9 @@
+//Grupo 02
+//Alunos João Santos (nº51009) e Rodrigo Viegas (nº50977)
+//LT13D
+
+//Exercício 1
+
 #include <stdio.h>
 #include <math.h>
 
