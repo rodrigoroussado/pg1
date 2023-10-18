@@ -23,3 +23,5 @@ void sort(int info[], int dim){
 	}
 
 }
+
+//Para passar a ordenar decrescentemente, temos de mudar a variável posMenor para posMaior e trocar "<" para ">" na linha 10
