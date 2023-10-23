@@ -1,0 +1,32 @@
+TRIM TESTS:
+OK!
+OK!
+'hello'
+'hello'
+'hello, world!'
+
+SNAKE TO CAMEL CASE TESTS:
+'SomeVar'
+'__'
+'__VarStartEndWithUnderscores__'
+
+SPLIT TESTS:
+[]
+['one']
+['a','simple','line']
+['a','new','simple','line']
+
+MIDDLE COMPRESSED TESTS:
+OK!
+OK!
+'Pedro M. Rodrigues'
+'Pedro M. V. Rodrigues'
+'Pedro Rodrigues'
+
+ANAGRAM TESTS:
+OK!
+OK!
+OK!
+OK!
+OK!
+OK!
