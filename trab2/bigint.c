@@ -27,7 +27,7 @@ int big_size(const BIG_INT b) {
  *   não tem
  */
 void big_show(const BIG_INT big) {
-	//for(int i = 1; i < big_size(big); i++){ printf("%c",big[i]); }   - ESTÁ MAL, NÚMERO AO CONTRÁRIO NO ARRAY
+	for(int i = big_size(big); i >=1; i++){ printf("%c",big[i]); }
 }
 
 /**
@@ -73,7 +73,26 @@ bool big_from_string(char n[], BIG_INT big) {
  * 		não tem
  */
 void big_from_long(long n, BIG_INT big) {
-	 // TO IMPLEMENT
+	
+	int contador = 0;
+	int i = 1;		//i é inicializado a 1 porque a posição 0 do big é para o seu tamanho (contador)
+	int digito;
+	
+	//Dividir o long por 10 e obter o seu dígito de menor peso (resto da divisão)
+	while(n >= 1){
+		
+		digito = n%10;
+		big[i] = digito;
+		
+		n = n/10;
+		contador++;
+		
+		}
+		
+	big[0] = contador
+	
+	//Colocar esse dígito na posição (>= 1)
+	//Contar o número de divisões feitas ao long (variável contador) e inserir esse valor inteiro na posição big[0]
 }
 
 
@@ -90,7 +109,10 @@ void big_from_long(long n, BIG_INT big) {
  *    valor positivo -> b1 > b2
  */
 int big_cmp(const BIG_INT b1, const BIG_INT b2) {
-    // TO IMPLEMENT
+    
+    //Comparar dígito a dígito enquanto b1[i] == b2[i]
+    //Quando os dígitos de b1 e b2, numa mesma posição n, forem diferentes, fazer b1[
+    
 	return -1;
 }
 
@@ -109,7 +131,10 @@ int big_cmp(const BIG_INT b1, const BIG_INT b2) {
  *   A função retorna true se a operação for bem sucedida.
  */
 bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm) {
-	 // TO IMPLEMENT
+	
+	//Somar elemento a elemento
+		//Se b1[n] + b2[n] >= 10, bm[n] = b1[n] + b2[n] - 10 e b1[n+1]++ (isto é o carry)
+	
 	return false;
 }
 
