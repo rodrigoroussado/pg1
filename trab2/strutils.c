@@ -14,12 +14,13 @@
  * 	Não tem
  */
 void str_trim(char src[], char dst[]) {
-   
+	
      //"Limpar" os espaços iniciais
    
 		//Encontrar a posição em que está a primeira letra na string
 		int i = 0;					//Variável usada para percorrer a string "src"
 		int j = 0;					//Variável usada para percorrer a string "dst"
+		int aux;
 		while(src[i] == ' '){i++;}	//Quando o while acaba, i tem o valor da posição da primeira letra da string
 		
 		
@@ -51,21 +52,26 @@ void str_trim(char src[], char dst[]) {
 			}
 				
 		espaco_anterior = false;
-		dst[j] = src[i];				//Copia o caractere
+		aux = j;					//Guarda a posição (para o caso em que a palavra copiada é a última
+		dst[j] = src[i];			//Copia o caractere
 		i++; j++;
 		
-	} //Quando este while acaba, j está na primeira posição que pode receber um caractere
+	} 
+	//Quando este while acaba, j está na primeira posição que pode receber um caractere
 	
 	/*Neste while, se houverem espaços finais em src[], apenas será copiado para dst[] o último
 	 * destes, pelo que, se o último caractere copiado for um espaço, temos de removê-lo*/
 	
 	
-   //"Limpar" o espaço final que pode restar
-   if(dst[j-1] == ' '){j = j-1;}
-   
-   //Colocar o terminador no fim da string
-   dst[j] = '\0';
-   
+    //"Limpar" o espaço final que resta
+    //A variável auxiliar encontra e guarda a posição do terminador
+    aux = 0;
+    while(dst[aux] != '\0'){aux++;}
+    
+    //Se atrás do terminador (fim da frase) sobrar um espaço, o terminador
+    //"recua", eliminando-o
+    if(dst[aux-1] == ' '){dst[aux-1] = '\0';}
+
 }
 
 
