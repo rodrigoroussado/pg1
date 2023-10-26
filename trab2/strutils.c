@@ -35,8 +35,8 @@ void str_trim(char src[], char dst[]) {
 		if(src[i] == ' ' && espaco_anterior == false){
 			
 			espaco_anterior = true;
-			dst[j] = src[i]				//Coloca o espaço único em dst[]
-			i++;
+			dst[j] = src[i];				//Coloca o espaço único em dst[]
+			i++; j++;
 			continue;
 			
 			}
@@ -51,14 +51,19 @@ void str_trim(char src[], char dst[]) {
 			}	
 		
 		dst[j] = src[i];				//Copia o caractere
-		i++;
+		i++; j++;
 		
-	}
+	} //Quando este while acaba, j está na primeira posição que pode receber um caractere
+	
+	/*Neste while, se houverem espaços finais em src[], apenas será copiado para dst[] o último
+	 * destes, pelo que, se o último caractere copiado for um espaço, temos de removê-lo*/
 	
 	
+   //"Limpar" o espaço final que pode restar
+   if(dst[j-1] == ' '){j = j-1;}
    
-
-   //"Limpar" os espaços finais
+   //Colocar o terminador no fim da string
+   dst[j] = '\0';
    
 }
 
