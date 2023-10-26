@@ -15,7 +15,7 @@
  */
 void str_trim(char src[], char dst[]) {
    
-   //"Limpar" os espaços iniciais
+     //"Limpar" os espaços iniciais
    
 		//Encontrar a posição em que está a primeira letra na string
 		int i = 0;					//Variável usada para percorrer a string "src"
@@ -48,8 +48,9 @@ void str_trim(char src[], char dst[]) {
 			
 			while(src[i] == ' '){i++;}	//i para na posição da primeira letra depois dos espaços
 			
-			}	
-		
+			}
+				
+		espaco_anterior = false;
 		dst[j] = src[i];				//Copia o caractere
 		i++; j++;
 		
