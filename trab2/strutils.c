@@ -89,7 +89,66 @@ void str_trim(char src[], char dst[]) {
  *    A string em snake "case "__" será escrita no formato Camel Case como “__".
  */
 void snake_2_camel_case(char src[], char dst[]) {
-     // TO IMPLEMENT 
+
+    int i = 0;			//Variável usada para percorrer o array src
+    int j = 0;			//Variável usada para percorrer o array dst
+    bool maiuscula_seguinte = false; //Indica se a letra na posição seguinte tem de ser maiúscula
+    
+	//Copiar os underscores iniciais para dst[]
+	while(src[i] == '_'){dst[j] = src[i]; i++; j++;}
+	
+	//Copiar a primeira letra (já não há underscores) para dst[]
+	dst[j] = src[i];
+	i++; j++;
+	
+	//Retirar os underscores do meio e colocar letras maiúsculas (deixa 1 único underscore no fim se houverem 1 ou +!)
+	while(src[i] != '\0'){
+		
+		if(src[i] == '_'){						//Se encontrar um underscore, "memoriza" para que o próximo caractere seja maiúsculo
+			
+			maiuscula_seguinte = true;
+			i++;
+			
+		}
+		
+		else{
+			
+			if(maiuscula_seguinte == true){		//Se tiver havido um underscore em src na posição anterior, escreve em maiúscula
+				
+				dst[j] = src[i] - ('a' - 'A');
+				maiuscula_seguinte = false;
+				
+			}
+			
+			else{								//Senão, copia normalmente
+				
+				dst[j] = src[i];
+				
+				}
+				
+		j++; i++;								//Avançar uma posição em cada um dos arrays
+			
+		}
+
+	} //No fim do while, i tem a posição do terminador de src e j tem a primeira posição dos underscores finais
+	
+
+	//Copiar underscores finais
+	
+	i = i - 1; 				//Passamos i para o último caractere da string (uma posição atrás do terminador)
+	
+	while(src[i] == '_'){	//Enquanto houverem underscores em src, copiamos para o final de dst
+		
+		dst[j] = '_';
+		j++;
+		i--;
+		
+		}
+		
+		
+	//Colocar o terminador no fim da string
+	dst[j] = '\0';	
+
 }
 
 /**
