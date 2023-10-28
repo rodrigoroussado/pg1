@@ -89,10 +89,9 @@ void big_from_long(long n, BIG_INT big) {
 		
 		}
 		
-	big[0] = contador
+	//Inserir o número de dígitos na primeira posição do array big (big[0])
+	big[0] = contador;
 	
-	//Colocar esse dígito na posição (>= 1)
-	//Contar o número de divisões feitas ao long (variável contador) e inserir esse valor inteiro na posição big[0]
 }
 
 
@@ -110,10 +109,42 @@ void big_from_long(long n, BIG_INT big) {
  */
 int big_cmp(const BIG_INT b1, const BIG_INT b2) {
     
-    //Comparar dígito a dígito enquanto b1[i] == b2[i]
-    //Quando os dígitos de b1 e b2, numa mesma posição n, forem diferentes, fazer b1[
+    int i = 1;
+    int j = 1;
+    int diferenca;
     
-	return -1;
+    //Descobrir posição do dígito de maior peso (última do número no array)
+	
+    while(i < b1[0]){		//Coloca i na posição do dígito de maior peso de b1
+	
+		i++;
+		
+	}
+	
+	while(j < b2[0]){		//Coloca j na posição do dígito de maior peso de b2
+		
+		j++;
+		
+	}
+	
+    
+    
+    //Comparar dígito a dígito enquanto b1[i] == b2[i] - maior peso para o menor peso
+    while(b1[i] == b2[j]){	//i e j ficam nas respetivas posições em que os elementos são diferentes
+		
+		i--;
+		j--;
+		
+	}
+	
+    
+    //Quando os dígitos de b1 e b2, numa mesma posição n, forem diferentes, fazer b1[i] - b2[j]
+    diferenca = b1[i] - b2[j];
+    
+    
+    //Retornar o valor de diferenca
+    return diferenca;
+	
 }
 
 
@@ -132,10 +163,49 @@ int big_cmp(const BIG_INT b1, const BIG_INT b2) {
  */
 bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm) {
 	
-	//Somar elemento a elemento
-		//Se b1[n] + b2[n] >= 10, bm[n] = b1[n] + b2[n] - 10 e b1[n+1]++ (isto é o carry)
+	int i = 1;
+	int j = 1;
+	int m = 1;
 	
-	return false;
+	//Somar elemento a elemento enquanto não chegar ao fim dos números
+		while( (i < b1[0]) && (j < b2[0]) ){
+			
+			
+			//A SOMA COMEÇA A SER POSTA EM i = 1!!!			
+			if( b1[i] + b2[j] >= 10 && (m + 1) >= MAX_DIGITS ){	//Caso em que a soma produz carry que causa overflow (> MAX_DIGITS)
+					
+				return false;
+					
+			}
+			
+			
+			
+			if( b1[i] + b2[j] >= 10 && (m + 1) < MAX_DIGITS ){ //Caso em que a soma produz carry (sem causar overflow)
+				
+				bm[m] = b1[i] + b2[j] - 10;					   //Faz a soma e retira ao resultado desta o valor do carry
+				bm[m+1] = bm[m+1] + 1;						   //Acrescenta o valor do carry com o devido peso ao dígito seguinte
+				
+			}
+			
+			else{
+				
+				bm[m] = b1[i] + b2[j];		//Caso em que a soma não produz carry
+				
+			}
+			
+			
+			
+			
+			i++;
+			j++;
+			m++;
+		}
+		
+		//Colocar o número de dígitos em bm
+		bm[0] = m;
+		
+		//Retornar true para indicar que a soma foi corretamente feita
+		return true;
 }
 
 /**
