@@ -1,4 +1,5 @@
 #include "strutils.h"
+#include <string.h>
  
 
  
@@ -166,10 +167,49 @@ void snake_2_camel_case(char src[], char dst[]) {
  * Ex: “setimo ANDAR” e “desmontaria” são anagramas.
  *     "ator" e "rota1" não são anagramas
  */
-bool anagram(char str1[], char str2[]) {
-    // TO IMPLEMENT
-    return false;
-}
+bool anagram(char str1[], char str2[]) {	//VERIFICAR NOVAMENTE!!!, FAIL NOS TESTES 3, 4 E 5!!!
+    
+    //Criar um array de MAX_LETRAS contadores para a str1 e outro para str2
+    int contador1[MAX_LETRAS];
+    int contador2[MAX_LETRAS];
+    bool anagrama = true;
+
+    //Limpar os as MAX_LETRAS posições desses arrays, colocando tudo a 0
+    for(int i = 0; i < MAX_LETRAS; i++){
+		
+		contador1[i] = 0;
+		contador2[i] = 0;
+		
+	}
+    
+    //Percorrer str 1, colocando tudo em maiúsculas e contar as ocorrências de cada letra
+    for(int i = 0; str1[i] != '\0'; i++){
+		
+		if(str1[i] >= 'a' && str1[i] <= 'z'){str1[i] = str1[i] - 'a' + 'A';}
+		if(str1[i] >= 'A' && str1[i] <= 'Z'){contador1[str1[i] - 'A']++;}
+		
+	}
+    
+
+    //Percorrer a str2, colocando tudo em maiúsculas e contar as ocorrências de cada letra
+    for(int i = 0; str2[i] != '\0'; i++){
+		
+		if(str2[i] >= 'a' && str2[i] <= 'z'){str2[i] = str2[i] - 'a' + 'A';}
+		if(str2[i] >= 'A' && str2[i] <= 'Z'){contador2[str2[i] - 'A']++;}
+		
+	}
+    
+    //Comparar os arrays de contadores
+		for(int i = 0; i < MAX_LETRAS; i++){
+		
+			if(contador1[i] != contador2[i]){anagrama = false; break;}
+			if(contador1[i] == contador2[i]){anagrama = true; continue;}
+			
+		}
+    
+	//Retornar se são anagramas ou não
+	return anagrama;
+}	
 
  
 /**
@@ -191,7 +231,7 @@ bool anagram(char str1[], char str2[]) {
  *    Se o nome original for:  "  pedro manuel  de  RODRIGUES  ", a conversão é:  "Pedro M. Rodrigues".
  */
 bool name_middle_compressed(char orig[], char result[]) {
-    // TO IMPLEMENT
+    //Usar a str_split
     return false;
 }
 
@@ -205,8 +245,7 @@ bool name_middle_compressed(char orig[], char result[]) {
  *    A função retorna o total de palavras colocadas no array "words"
  */
 int str_split(char text[], word_t words[], int size) {
-    // TO IMPLEMENT
-    return 0;
+	
+	//USAR STR_TRIM ANTES PARA GARANTIR QUE NÃO HÁ ESPAÇOS NO INÍCIO/FIM NEM DUPLICADOS NO MEIO!!!
+
 }
-
-
