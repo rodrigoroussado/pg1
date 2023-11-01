@@ -161,51 +161,148 @@ int big_cmp(const BIG_INT b1, const BIG_INT b2) {
  *   a soma não couber no máximo de dígitos permitido.
  *   A função retorna true se a operação for bem sucedida.
  */
-bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm) {
+bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 	
 	int i = 1;
-	int j = 1;
-	int m = 1;
+	int tamanho_bm = 0; //Variável usada para colocar o número de dígitos de bm em bm[0]
+	bool carry = false; //Variável usada para controlar a existência de carry na soma
 	
-	//Somar elemento a elemento enquanto não chegar ao fim dos números
-		while( (i < b1[0]) && (j < b2[0]) ){
+	//Determinar qual o big int mais pequeno
+	if(big_size(b1) > big_size(b2)){
+		
+		//Fazer a soma
+		while(i < big_size(b2)){
 			
-			
-			//A SOMA COMEÇA A SER POSTA EM i = 1!!!			
-			if( b1[i] + b2[j] >= 10 && (m + 1) >= MAX_DIGITS ){	//Caso em que a soma produz carry que causa overflow (> MAX_DIGITS)
-					
+			if(i >= 255){
+				
+				break;
 				return false;
-					
+				
 			}
 			
-			
-			
-			if( b1[i] + b2[j] >= 10 && (m + 1) < MAX_DIGITS ){ //Caso em que a soma produz carry (sem causar overflow)
+			if(carry == true){
 				
-				bm[m] = b1[i] + b2[j] - 10;					   //Faz a soma e retira ao resultado desta o valor do carry
-				bm[m+1] = bm[m+1] + 1;						   //Acrescenta o valor do carry com o devido peso ao dígito seguinte
+				bm[i] = b1[i] + b2[i] + 1;
+				carry = false;
 				
 			}
 			
 			else{
 				
-				bm[m] = b1[i] + b2[j];		//Caso em que a soma não produz carry
+				bm[i] = b1[i] + b2[i];
 				
 			}
 			
-			
-			
+			if(bm[i] >= 10){
+				
+				bm[i] = bm[i] - 10;
+				carry = true;
+				
+			}
 			
 			i++;
-			j++;
-			m++;
+			tamanho_bm++;
+			
 		}
 		
-		//Colocar o número de dígitos em bm
-		bm[0] = m;
+		//Copiar para bm o resto dos dígitos de b1
+		while(i < big_size(b1)){
+			
+			bm[i] = b1[i];
+			i++;
+			
+		}
 		
-		//Retornar true para indicar que a soma foi corretamente feita
-		return true;
+	}
+	else{
+		
+		if(big_size(b1) < big_size(b2)){
+			
+		//Fazer a soma
+		while(i < big_size(b1)){
+			
+			if(i >= 255){
+				
+				break;
+				return false;
+				
+			}
+			
+			if(carry == true){
+				
+				bm[i] = b1[i] + b2[i] + 1;
+				carry = false;
+				
+			}
+			
+			else{
+				
+				bm[i] = b1[i] + b2[i];
+				
+			}
+			
+			if(bm[i] >= 10){
+				
+				bm[i] = bm[i] - 10;
+				carry = true;
+				
+			}
+			
+			i++;
+			tamanho_bm++;
+			
+		}
+		
+		//Copiar para bm o resto dos dígitos de b2
+		while(i < big_size(b2)){
+			
+			bm[i] = b2[i];
+			i++;
+			
+		}
+			
+		}
+		else{	//Caso em que os big ints têm o mesmo tamanho
+			
+			//Fazer a soma
+			while(i < big_size(b2)){
+			
+				if(i >= 255){
+				
+					break;
+					return false;
+				
+				}
+			
+				if(carry == true){
+				
+					bm[i] = b1[i] + b2[i] + 1;
+					carry = false;
+				
+				}
+			
+				else{
+				
+					bm[i] = b1[i] + b2[i];
+				
+				}
+			
+				if(bm[i] >= 10){
+				
+					bm[i] = bm[i] - 10;
+					carry = true;
+				
+				}
+			
+				i++;
+				tamanho_bm++;
+			}
+		}	
+		
+	}
+	
+	bm[0] = tamanho_bm;
+	return true;
 }
 
 /**
@@ -237,8 +334,9 @@ bool big_mul_dig(const BIG_INT b, int d, BIG_INT bres) {
  *   A função retorna true se a operação for bem sucedida.
  */
 bool big_mul_10(BIG_INT b) {
-    // TO IMPLEMENT
-    return false;
+    
+	
+	return true;
 }
 
 
