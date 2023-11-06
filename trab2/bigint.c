@@ -27,7 +27,7 @@ int big_size(const BIG_INT b) {
  *   não tem
  */
 void big_show(const BIG_INT big) {
-	for(int i = big_size(big); i >=1; i++){ printf("%c",big[i]); }
+	for(int i = big_size(big); i != 0; i--){ printf("%d",big[i]); }
 }
 
 /**
@@ -41,7 +41,7 @@ void big_show(const BIG_INT big) {
  */
 void big_copy(const BIG_INT bsrc, BIG_INT bcopy) {
 	
-    for(int i = 0; i < big_size(bsrc); i++){
+    for(int i = 0; i <= big_size(bsrc); i++){
 		
 		bcopy[i] = bsrc[i];
 		
