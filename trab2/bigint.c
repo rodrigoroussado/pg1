@@ -181,7 +181,7 @@ int big_cmp(const BIG_INT b1, const BIG_INT b2) {
  */
 bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 	
-	int i = 1;
+	int j = 1;
 	int tamanho_bm = 0; //Variável usada para colocar o número de dígitos de bm em bm[0]
 	bool carry = false; //Variável usada para controlar a existência de carry na soma
 	
@@ -189,7 +189,7 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 	if(big_size(b1) > big_size(b2)){
 		
 		//Fazer a soma
-		while(i <= big_size(b2)){
+		for(int i = 0; i <= big_size(b2); i++){
 			
 			if(i >= 255){
 				
@@ -200,34 +200,34 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 			
 			if(carry == true){
 				
-				bm[i] = b1[i] + b2[i] + 1;
+				bm[j] = b1[j] + b2[j] + 1;
 				carry = false;
 				
 			}
 			
 			else{
 				
-				bm[i] = b1[i] + b2[i];
+				bm[j] = b1[j] + b2[j];
 				
 			}
 			
-			if(bm[i] >= 10){
+			if(bm[j] >= 10){
 				
-				bm[i] = bm[i] - 10;
+				bm[j] = bm[j] - 10;
 				carry = true;
 				
 			}
 			
-			i++;
+			j++;
 			tamanho_bm++;
 			
 		}
 		
 		//Copiar para bm o resto dos dígitos de b1
-		while(i <= big_size(b1)){
+		while(j <= big_size(b1)){
 			
-			bm[i] = b1[i];
-			i++;
+			bm[j] = b1[j];
+			j++;
 			
 		}
 		
@@ -236,54 +236,10 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 		
 		if(big_size(b1) < big_size(b2)){
 			
-		//Fazer a soma
-		while(i <= big_size(b1)){
-			
-			if(i >= 255){
-				
-				break;
-				return false;
-				
-			}
-			
-			if(carry == true){
-				
-				bm[i] = b1[i] + b2[i] + 1;
-				carry = false;
-				
-			}
-			
-			else{
-				
-				bm[i] = b1[i] + b2[i];
-				
-			}
-			
-			if(bm[i] >= 10){
-				
-				bm[i] = bm[i] - 10;
-				carry = true;
-				
-			}
-			
-			i++;
-			tamanho_bm++;
-			
-		}
-		
-		//Copiar para bm o resto dos dígitos de b2
-		while(i <= big_size(b2)){
-			
-			bm[i] = b2[i];
-			i++;
-			
-		}
-			
-		}
-		else{	//Caso em que os big ints têm o mesmo tamanho
+			int j = 1;
 			
 			//Fazer a soma
-			while(i <= big_size(b2)){
+			for(int i = 0; i <= big_size(b1); i++){
 			
 				if(i >= 255){
 				
@@ -294,25 +250,73 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 			
 				if(carry == true){
 				
-					bm[i] = b1[i] + b2[i] + 1;
+					bm[j] = b1[j] + b2[j] + 1;
 					carry = false;
 				
 				}
 			
 				else{
 				
-					bm[i] = b1[i] + b2[i];
+					bm[j] = b1[j] + b2[j];
 				
 				}
 			
-				if(bm[i] >= 10){
+				if(bm[j] >= 10){
 				
-					bm[i] = bm[i] - 10;
+					bm[j] = bm[j] - 10;
 					carry = true;
 				
 				}
 			
-				i++;
+				j++;
+				tamanho_bm++;
+			
+		}
+		
+		//Copiar para bm o resto dos dígitos de b2
+		while(j <= big_size(b2)){
+			
+			bm[j] = b2[j];
+			j++;
+			
+		}
+			
+		}
+		else{	//Caso em que os big ints têm o mesmo tamanho
+			
+			int j = 1;
+			
+			//Fazer a soma
+			for(int i = 0; i <= big_size(b2); i++){
+			
+				if(i >= 255){
+				
+					break;
+					return false;
+				
+				}
+			
+				if(carry == true){
+				
+					bm[j] = b1[j] + b2[j] + 1;
+					carry = false;
+				
+				}
+			
+				else{
+				
+					bm[j] = b1[j] + b2[j];
+				
+				}
+			
+				if(bm[j] >= 10){
+				
+					bm[j] = bm[j] - 10;
+					carry = true;
+				
+				}
+			
+				j++;
 				tamanho_bm++;
 			}
 		}	
