@@ -13,8 +13,8 @@ bool name_middle_compressed(char orig[], char result[]) {
 int str_split(char text[], word_t words[], int size) {
 	
     int contador = 0;
-    char* inicio = text;
-    char* fim = text;
+    char *inicio = text;
+    char *fim = text;
 
     while (*fim != '\0' && contador < size) {
 		//encontra o inicio da palavra tirando tudo o que ´eespaço e mudanaças de linha ou mesmo tab
