@@ -135,41 +135,33 @@ void big_from_long(long n, BIG_INT big) {
  */
 int big_cmp(const BIG_INT b1, const BIG_INT b2) {
     
-    int i = 1;
-    int j = 1;
     int diferenca;
     
-    //Descobrir posição do dígito de maior peso (última do número no array)
-	
-    while(i < b1[0]){		//Coloca i na posição do dígito de maior peso de b1
-	
-		i++;
+	if( big_size(b1) > big_size(b2) ){
+		
+		for(int i = big_size(b2); i != 1; i--){
+			
+			diferenca = b1[i] - b2[i];
+			
+			if(diferenca != 0){return diferenca;}
+			
+		}
+		
+	}
+	else{ //b1 < b2 ou iguais
+		
+		for(int i = big_size(b1); i != 0; i--){
+			
+			diferenca = b1[i] - b2[i];
+			
+			if(diferenca != 0){return diferenca;}
+			
+			
+		}
 		
 	}
 	
-	while(j < b2[0]){		//Coloca j na posição do dígito de maior peso de b2
-		
-		j++;
-		
-	}
-	
-    
-    
-    //Comparar dígito a dígito enquanto b1[i] == b2[i] - maior peso para o menor peso
-    while(b1[i] == b2[j]){	//i e j ficam nas respetivas posições em que os elementos são diferentes
-		
-		i--;
-		j--;
-		
-	}
-	
-    
-    //Quando os dígitos de b1 e b2, numa mesma posição n, forem diferentes, fazer b1[i] - b2[j]
-    diferenca = b1[i] - b2[j];
-    
-    
-    //Retornar o valor de diferenca
-    return diferenca;
+	return 0;
 	
 }
 
