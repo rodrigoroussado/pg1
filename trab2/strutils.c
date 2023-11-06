@@ -167,8 +167,49 @@ void snake_2_camel_case(char src[], char dst[]) {
  * Ex: “setimo ANDAR” e “desmontaria” são anagramas.
  *     "ator" e "rota1" não são anagramas
  */
-bool anagram(char str1[], char str2[]) {	//VERIFICAR NOVAMENTE!!!, FAIL NOS TESTES 3, 4 E 5!!!
-    
+int str_size(char str[]){
+
+	int i = 0;
+	while(str[i] != '\0'){i++;}
+	
+	return i;
+	 
+}
+
+bool letra(char c){
+	
+	if( (c >= 'A' && c <= 'Z') || (c >= 'a' && c<= 'z') ){return true;}
+	else{return false;}
+	
+}
+
+bool just_letters(char str[]){
+	
+	for(int i = 0; str[i] != '\0'; i++){
+		
+		if(!letra(str[i])){return false;}
+	
+	}
+	
+	return true;
+	
+}
+
+bool valid_str(char str[]){
+	
+	if(!just_letters(str)){return false;}
+	if(str_size(str) < 2){return false;}
+	
+	return true;
+	
+}
+ 
+bool anagram(char str1[], char str2[]) {
+	
+	if(!valid_str(str1) || !valid_str(str2)){return false;}
+	else{
+		
+		
     //Criar um array de MAX_LETRAS contadores para a str1 e outro para str2
     int contador1[MAX_LETRAS];
     int contador2[MAX_LETRAS];
@@ -209,6 +250,9 @@ bool anagram(char str1[], char str2[]) {	//VERIFICAR NOVAMENTE!!!, FAIL NOS TEST
     
 	//Retornar se são anagramas ou não
 	return anagrama;
+		
+	}
+	
 }	
 
  
@@ -246,6 +290,46 @@ bool name_middle_compressed(char orig[], char result[]) {
  */
 int str_split(char text[], word_t words[], int size) {
 	
-	//USAR STR_TRIM ANTES PARA GARANTIR QUE NÃO HÁ ESPAÇOS NO INÍCIO/FIM NEM DUPLICADOS NO MEIO!!!
+		
+    int contador = 0;
+    char *inicio = text;
+    char *fim = text;
 
+    while (*fim != '\0' && contador < size) {
+		
+		//encontra o inicio da palavra tirando tudo o que ´eespaço e mudanças de linha ou tab
+        while (*inicio != '\0' && (*inicio == ' ' || *inicio == '\t' || *inicio == '\n')) {
+			
+            inicio++;
+            
+        }
+
+        if (*inicio == '\0') {   //caso a string esteja vazia e chegamos ao fim saímos do while
+			
+            break;
+            
+        }
+		// fim = inicio para começar a ler de onde parou anteriormente para agora encontrar o fim da palavra
+        fim = inicio;
+
+        while (*fim != '\0' && (*fim != ' ' && *fim != '\t' && *fim != '\n')) {
+			
+            fim++;
+            
+        }
+
+        int largura_word = fim - inicio;
+
+
+        strncpy (words[contador], inicio, largura_word);    //copia "start" vezes para words 
+        words[contador][largura_word] = '\0';             	//adiciona \0 no final da string!!
+
+        contador++;                                     	//vai sempre interando ate end = \0
+        inicio = fim;
+    }
+
+    return contador;
+
+
+	return 0;
 }
