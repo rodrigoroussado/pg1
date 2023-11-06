@@ -59,8 +59,34 @@ void big_copy(const BIG_INT bsrc, BIG_INT bcopy) {
  *   se foi encontrado algum caracter não numérico  
  */
 bool big_from_string(char n[], BIG_INT big) {
-	 // TO IMPLEMENT
-	return false;
+	
+	int tamanho = 0;
+	int posicao_terminador = 0;
+	int j = 0;		//Variável usada para colocar os valores em big
+	
+	for(int i = 0; n[i] != '\0'; i++){posicao_terminador++;}
+	
+	if(n[0] == '\0'){return false;}
+	
+	for(int i = posicao_terminador - 1; i >= 0; i--){
+		
+		if(n[i] >= '0' && n[i] <= '9'){
+		
+			big[j+1] = n[i] - '0'; 		//i + 1 porque deixamos um espaço (big[0]) para colocar o tamanho do big int
+			
+			tamanho++;
+			
+		}
+		
+		else{return false;}
+		
+		j++;
+	}
+	
+	big[0] = tamanho;
+	
+	return true;
+	
 }
 
 /**
