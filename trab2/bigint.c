@@ -189,7 +189,7 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 	if(big_size(b1) > big_size(b2)){
 		
 		//Fazer a soma
-		while(i < big_size(b2)){
+		while(i <= big_size(b2)){
 			
 			if(i >= 255){
 				
@@ -224,7 +224,7 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 		}
 		
 		//Copiar para bm o resto dos dígitos de b1
-		while(i < big_size(b1)){
+		while(i <= big_size(b1)){
 			
 			bm[i] = b1[i];
 			i++;
@@ -237,7 +237,7 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 		if(big_size(b1) < big_size(b2)){
 			
 		//Fazer a soma
-		while(i < big_size(b1)){
+		while(i <= big_size(b1)){
 			
 			if(i >= 255){
 				
@@ -272,7 +272,7 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 		}
 		
 		//Copiar para bm o resto dos dígitos de b2
-		while(i < big_size(b2)){
+		while(i <= big_size(b2)){
 			
 			bm[i] = b2[i];
 			i++;
@@ -283,7 +283,7 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 		else{	//Caso em que os big ints têm o mesmo tamanho
 			
 			//Fazer a soma
-			while(i < big_size(b2)){
+			while(i <= big_size(b2)){
 			
 				if(i >= 255){
 				
