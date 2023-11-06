@@ -1,3 +1,15 @@
+bool name_middle_compressed(char orig[], char result[]) {
+    
+    return false;
+}
+
+/**
+ * Descrição:
+ *    Esta função coloca no array "words" as palavras (word_t) existentes no array "text" 
+ * 	  até ao máximo de size palavras
+ * Retorno:
+ *    A função retorna o total de palavras colocadas no array "words"
+ */
 int str_split(char text[], word_t words[], int size) {
 	
     int contador = 0;
@@ -26,11 +38,11 @@ int str_split(char text[], word_t words[], int size) {
             
         }
 
-        int word_length = fim - inicio;
+        int largura_word = fim - inicio;
 
 
-        strncpy (words[contador], inicio, word_length);    //copia "start" vezes para words 
-        words[contador][word_length] = '\0';             //adiciona \0 no final da string!!
+        strncpy (words[contador], inicio, largura_word);    //copia "start" vezes para words 
+        words[contador][largura_word] = '\0';             //adiciona \0 no final da string!!
 
         contador++;                                     //vai sempre interando ate end = \0
         inicio = fim;
@@ -38,5 +50,4 @@ int str_split(char text[], word_t words[], int size) {
 
     return contador;
 
-}
 }
