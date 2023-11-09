@@ -1,8 +1,4 @@
 #include "strutils.h"
-#include <string.h>
- 
-
- 
     
 /**
  * Descrição:
@@ -14,6 +10,7 @@
  * Retorno:
  * 	Não tem
  */
+
 void str_trim(char src[], char dst[]) {
 	
      //"Limpar" os espaços iniciais
@@ -89,6 +86,7 @@ void str_trim(char src[], char dst[]) {
  *    A string em snake "case "__var_start_end__with_underscores__" será escrita no formato Camel Case como “__VarStartEndWithUnderscores__".
  *    A string em snake "case "__" será escrita no formato Camel Case como “__".
  */
+ 
 void snake_2_camel_case(char src[], char dst[]) {
 
     int i = 0;			//Variável usada para percorrer o array src
@@ -167,95 +165,119 @@ void snake_2_camel_case(char src[], char dst[]) {
  * Ex: “setimo ANDAR” e “desmontaria” são anagramas.
  *     "ator" e "rota1" não são anagramas
  */
-int str_size(char str[]){
-
-	int i = 0;
-	while(str[i] != '\0'){i++;}
-	
-	return i;
-	 
-}
-
-bool letra(char c){
-	
-	if( (c >= 'A' && c <= 'Z') || (c >= 'a' && c<= 'z') ){return true;}
-	else{return false;}
-	
-}
-
-bool just_letters(char str[]){
+ 
+static bool apenasLetras(char str[]){
 	
 	for(int i = 0; str[i] != '\0'; i++){
 		
-		if(!letra(str[i])){return false;}
-	
+		char c = str[i];
+		
+		bool ok = ( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == ' '));
+		
+		if(ok == false){return false;}
+		
 	}
 	
 	return true;
 	
 }
 
-bool valid_str(char str[]){
+
+static bool letrasMinimas(char str[]){
 	
-	if(!just_letters(str)){return false;}
-	if(str_size(str) < 2){return false;}
+	int i = 0;
+	int nletras = 0;
 	
-	return true;
+	while(str[i] != '\0'){
+		
+		i++;
+		
+	}
+	
+	nletras = i;
+	
+	if(nletras < 2){return false;}
+	else{return true;}
 	
 }
  
-bool anagram(char str1[], char str2[]) {
+ 
+static void limparContadores(int contador[]){
 	
-	if(!valid_str(str1) || !valid_str(str2)){return false;}
-	else{
+	for(int i = 0; i < MAX_LETRAS; i++){
 		
+		contador[i] = 0;
 		
-    //Criar um array de MAX_LETRAS contadores para a str1 e outro para str2
+	}
+	
+} 
+ 
+
+bool anagram(char str1[], char str2[]) {
+   
     int contador1[MAX_LETRAS];
     int contador2[MAX_LETRAS];
-    bool anagrama = true;
-
-    //Limpar os as MAX_LETRAS posições desses arrays, colocando tudo a 0
-    for(int i = 0; i < MAX_LETRAS; i++){
-		
-		contador1[i] = 0;
-		contador2[i] = 0;
-		
-	}
-    
-    //Percorrer str 1, colocando tudo em maiúsculas e contar as ocorrências de cada letra
-    for(int i = 0; str1[i] != '\0'; i++){
-		
-		if(str1[i] >= 'a' && str1[i] <= 'z'){str1[i] = str1[i] - 'a' + 'A';}
-		if(str1[i] >= 'A' && str1[i] <= 'Z'){contador1[str1[i] - 'A']++;}
-		
-	}
-    
-
-    //Percorrer a str2, colocando tudo em maiúsculas e contar as ocorrências de cada letra
-    for(int i = 0; str2[i] != '\0'; i++){
-		
-		if(str2[i] >= 'a' && str2[i] <= 'z'){str2[i] = str2[i] - 'a' + 'A';}
-		if(str2[i] >= 'A' && str2[i] <= 'Z'){contador2[str2[i] - 'A']++;}
-		
-	}
-    
-    //Comparar os arrays de contadores
-		for(int i = 0; i < MAX_LETRAS; i++){
-		
-			if(contador1[i] != contador2[i]){anagrama = false; break;}
-			if(contador1[i] == contador2[i]){anagrama = true; continue;}
-			
-		}
-    
-	//Retornar se são anagramas ou não
-	return anagrama;
-		
-	}
 	
-}	
+	if(str1[0] == '\0' || str2[0] == '\0'){return false;}
+	
+	if( !(letrasMinimas(str1) && letrasMinimas(str2)) ){return false;}
+	
+	if( !(apenasLetras(str1) && apenasLetras(str2)) ){return false;}
+	
+	//Limpar os contadores (colocar os elementos de 0 a MAX_LETRAS - 1 a 0)
+	limparContadores(contador1);
+	limparContadores(contador2);
+	
+	//conta quantas letras ha na str1
+	for (int i = 0; str1[i] != '\0'; i++) {
+		
+		char c = str1[i];
+		if (c >= 'a' && c <= 'z') {
+			
+			contador1[c - 'a']++;
+            
+		}
+        
+        else{
+			if (c >= 'A' && c <= 'Z') {
+				
+				contador1[c - 'A']++;
+			}
+		}
+	}
 
- 
+	//conta quantas letras ha na str2
+	for (int i = 0; str2[i] != '\0'; i++) {
+		
+		char c = str2[i];
+		if (c >= 'a' && c <= 'z') {
+			
+			contador2[c - 'a']++;
+            
+		}
+		 
+		else {
+			if (c >= 'A' && c <= 'Z') {
+				
+				contador2[c - 'A']++;
+            
+			}
+		}
+	}
+
+	//compara as duas strings
+	for (int i = 0; i < MAX_LETRAS; i++) {
+		
+		if (contador1[i] != contador2[i]) {
+			
+			return false;
+            
+		}
+	}
+
+	return true;
+}
+
 /**
  * Descrição:
  *	  Gera o formato alternativo para o nome recebido por parâmetro em que apenas 
@@ -274,12 +296,101 @@ bool anagram(char str1[], char str2[]) {
  *    Se o nome original for:  "  pedro manuel  vieira   rodrigues  ", a conversão é:  "Pedro M. V. Rodrigues".
  *    Se o nome original for:  "  pedro manuel  de  RODRIGUES  ", a conversão é:  "Pedro M. Rodrigues".
  */
-bool name_middle_compressed(char orig[], char result[]) {
-    //Usar a str_split
-    return false;
+
+static int e_espaco(char c) {
+	return c == ' ' || c == '\t' || c == '\n';
 }
 
- 
+static void maiuscula(char *str) {
+	if (*str >= 'a' && *str <= 'z') {
+		
+	*str = *str - 'a' + 'A';
+	
+	}
+}
+
+bool name_middle_compressed(char orig[], char result[]) {
+	
+	//Remover os espaços finais e iniciais - podemos ver o str_trim
+	char *inicio = orig;
+	
+	while (e_espaco(*inicio)) {
+		
+		++inicio;
+	
+	}
+
+	char *fim = orig + strlen(orig) - 1;
+	while (fim > inicio && e_espaco(*fim)) {
+		
+		--fim;
+	}
+	
+	//poem o determinador no fim da string
+	*(fim + 1) = '\0';   
+
+
+	//Dibide o nome em varias partes - podemos depois ver se da para usar o str_split
+	char *parts[MAX_PALAVRAS];
+	int numParts = 0;
+	int largura = strlen(inicio);
+	int i = 0, j;
+
+	while (i < largura) {
+		
+		//pula espaços iniciais
+		while (i < largura && e_espaco(inicio[i])) {
+			
+			++i;
+            
+		}
+
+		//enciontra o fim 
+        
+		j = i;
+		while (j < largura && !e_espaco(inicio[j])) {
+			
+			++j;
+            
+		}
+
+		//copia o array
+		if (j > i) {
+			
+			inicio[j] = '\0';
+			parts[numParts++] = &inicio[i];
+			i = j + 1;
+			
+		}
+		
+		else {break;}
+		
+	}
+
+	//ve se o nome é valido - mais que 2 nomes
+	if (numParts < 2) {return false;}
+
+	//Converter o nome para o formato pedido
+	int resultLargura = 0;
+
+	//poem em maiuscula a primeira letra de cada parte
+	for (i = 0; i < numParts; ++i) {maiuscula(parts[i]);}
+
+	//Escreve o primeiro nome
+	resultLargura += sprintf(result + resultLargura, "%s ", parts[0]);
+
+	//comprime os nomes do meio
+	for (i = 1; i < numParts - 1; ++i) {
+		if (strlen(parts[i]) > 2) {
+			resultLargura += sprintf(result + resultLargura, "%c. ", parts[i][0]);
+		}
+	}
+
+	//escrve o ultimo nome
+	sprintf(result + resultLargura, "%s", parts[numParts - 1]);
+
+	return true;
+}
 
 /**
  * Descrição:
@@ -288,28 +399,27 @@ bool name_middle_compressed(char orig[], char result[]) {
  * Retorno:
  *    A função retorna o total de palavras colocadas no array "words"
  */
+ 
 int str_split(char text[], word_t words[], int size) {
 	
-		
     int contador = 0;
     char *inicio = text;
     char *fim = text;
 
     while (*fim != '\0' && contador < size) {
-		
-		//encontra o inicio da palavra tirando tudo o que ´eespaço e mudanças de linha ou tab
+		//encontra o inicio da palavra tirando tudo o que ´eespaço e mudanaças de linha ou mesmo tab
         while (*inicio != '\0' && (*inicio == ' ' || *inicio == '\t' || *inicio == '\n')) {
 			
             inicio++;
             
         }
 
-        if (*inicio == '\0') {   //caso a string esteja vazia e chegamos ao fim saímos do while
+        if (*inicio == '\0') {   //caso a string esteja vazia e chegamos ao fim saimos so while
 			
             break;
             
         }
-		// fim = inicio para começar a ler de onde parou anteriormente para agora encontrar o fim da palavra
+		// fim = inicio para começar a ler de onde parou anteriormente para agora encontrat o fim da palavra
         fim = inicio;
 
         while (*fim != '\0' && (*fim != ' ' && *fim != '\t' && *fim != '\n')) {
@@ -322,14 +432,12 @@ int str_split(char text[], word_t words[], int size) {
 
 
         strncpy (words[contador], inicio, largura_word);    //copia "start" vezes para words 
-        words[contador][largura_word] = '\0';             	//adiciona \0 no final da string!!
+        words[contador][largura_word] = '\0';             //adiciona \0 no final da string!!
 
-        contador++;                                     	//vai sempre interando ate end = \0
+        contador++;                                     //vai sempre interando ate end = \0
         inicio = fim;
     }
 
     return contador;
 
-
-	return 0;
 }
