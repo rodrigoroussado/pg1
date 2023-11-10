@@ -179,51 +179,39 @@ int big_cmp(const BIG_INT b1, const BIG_INT b2) {
  *   a soma não couber no máximo de dígitos permitido.
  *   A função retorna true se a operação for bem sucedida.
  */
-bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
+ 
+void verificarCarry(int bm[], int tamanho_bigint){
 	
-	int j = 1;
-	int tamanho_bm = 0; //Variável usada para colocar o número de dígitos de bm em bm[0]
-	bool carry = false; //Variável usada para controlar a existência de carry na soma
+	int carry = 0;
 	
-	//Determinar qual o big int mais pequeno
-	if(big_size(b1) > big_size(b2)){
+	for(int i = 0; i <= tamanho_bigint; i++){
 		
-		//Fazer a soma
-		for(int i = 0; i <= big_size(b2); i++){
+		if(bm[i] >= 10){
 			
-			if(i >= 255){
-				
-				break;
-				return false;
-				
-			}
-			
-			if(carry == true){
-				
-				bm[j] = b1[j] + b2[j] + 1;
-				carry = false;
-				
-			}
-			
-			else{
-				
-				bm[j] = b1[j] + b2[j];
-				
-			}
-			
-			if(bm[j] >= 10){
-				
-				bm[j] = bm[j] - 10;
-				carry = true;
-				
-			}
-			
-			j++;
-			tamanho_bm++;
+			bm[i] = bm[i] - 10;
+			carry = 1;
+			bm[i+1] = bm[i+1] + carry;
+			carry = 0;
 			
 		}
 		
-		//Copiar para bm o resto dos dígitos de b1
+	}
+	
+}
+
+bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
+	
+	int j = 0;
+	
+	if( big_size(b1) > big_size(b2) ){
+		
+		for(int i = 1; i <= big_size(b2); i++){
+			
+			bm[i] = b1[i] + b2[i];
+			j = i;
+		}
+		
+		
 		while(j <= big_size(b1)){
 			
 			bm[j] = b1[j];
@@ -231,100 +219,38 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
 			
 		}
 		
+		verificarCarry(bm, j);
+		
+		
+		//FALTA VERIFICAR OVERFLOW AQUI!!
+		
+		return true;
 	}
+	
 	else{
 		
-		if(big_size(b1) < big_size(b2)){
+		for(int i = 1; i <= big_size(b1); i++){
 			
-			int j = 1;
-			
-			//Fazer a soma
-			for(int i = 0; i <= big_size(b1); i++){
-			
-				if(i >= 255){
-				
-					break;
-					return false;
-				
-				}
-			
-				if(carry == true){
-				
-					bm[j] = b1[j] + b2[j] + 1;
-					carry = false;
-				
-				}
-			
-				else{
-				
-					bm[j] = b1[j] + b2[j];
-				
-				}
-			
-				if(bm[j] >= 10){
-				
-					bm[j] = bm[j] - 10;
-					carry = true;
-				
-				}
-			
-				j++;
-				tamanho_bm++;
+			bm[i] = b1[i] + b2[i];
+			j = i;
 			
 		}
 		
-		//Copiar para bm o resto dos dígitos de b2
 		while(j <= big_size(b2)){
 			
 			bm[j] = b2[j];
 			j++;
 			
 		}
-			
-		}
-		else{	//Caso em que os big ints têm o mesmo tamanho
-			
-			int j = 1;
-			
-			//Fazer a soma
-			for(int i = 0; i <= big_size(b2); i++){
-			
-				if(i >= 255){
-				
-					break;
-					return false;
-				
-				}
-			
-				if(carry == true){
-				
-					bm[j] = b1[j] + b2[j] + 1;
-					carry = false;
-				
-				}
-			
-				else{
-				
-					bm[j] = b1[j] + b2[j];
-				
-				}
-			
-				if(bm[j] >= 10){
-				
-					bm[j] = bm[j] - 10;
-					carry = true;
-				
-				}
-			
-				j++;
-				tamanho_bm++;
-			}
-		}	
 		
+		//verificarCarry(bm);
+		
+		//FALTA VERIFICAR OVERFLOW AQUI!
+		
+		return true;
+
 	}
 	
-	bm[0] = tamanho_bm;
-	return true;
 }
 
 /**
@@ -356,9 +282,26 @@ bool big_mul_dig(const BIG_INT b, int d, BIG_INT bres) {
  *   A função retorna true se a operação for bem sucedida.
  */
 bool big_mul_10(BIG_INT b) {
+	
+	if(big_size(b) + 1 > MAX_DIGITS){return false;}
     
+    //Percorrer a array b, colocando todos os elementos uma posição para a frente
+		for(int i = big_size(b); i != 0; i--){
+			
+			b[i+1] = b[i];
+			
+		}
+		
+		
+	//Colocar o zero na primeira posição dos dígitos de big_int
+	b[1] = 0;
+	
+	
+	//Adicionar 1 ao número de dígitos do big_int
+	b[0]++;
 	
 	return true;
+	
 }
 
 
@@ -377,8 +320,21 @@ bool big_mul_10(BIG_INT b) {
  *   A função retorna true se a operação for bem sucedida.
  */
 bool  big_mul_pow_10(BIG_INT b, int exp) {
-    // TO IMPLEMENT
-	return false;
+	
+	int digitos = big_size(b);
+    
+    if(digitos + exp > MAX_DIGITS){return false;}
+    
+    for(int i = 0; i < exp; i++){
+		
+		big_mul_10(b);
+		
+	}
+	
+	return true;
+    
+    
+    
 }
 
 
@@ -395,6 +351,9 @@ bool  big_mul_pow_10(BIG_INT b, int exp) {
  */	
 bool big_mul(const BIG_INT b1, const BIG_INT b2, BIG_INT bm) {
     // TO IMPLEMENT
+    
+    //MULTIPLICAÇÃO DE MATRIZES!!!
+    
 	return false;
 }
  
