@@ -132,33 +132,43 @@ void big_from_long(long n, BIG_INT big) {
  *    valor negativo -> b1 < b2
  *    0              -> b1 == b2
  *    valor positivo -> b1 > b2
- */
+ */ 
+ 
+static int digitosReais (const BIG_INT b){
+	
+	int zeros = 0;
+	int tamanhoReal = big_size(b);
+	
+	for(int i = big_size(b); b[i] == 0; i--){zeros++;}
+		
+		tamanhoReal -= zeros;
+		
+		return tamanhoReal; 
+
+}
+ 
 int big_cmp(const BIG_INT b1, const BIG_INT b2) {
     
     int diferenca;
     
-	if( big_size(b1) > big_size(b2) ){
+    //b1 > b2
+	if( digitosReais(b1) > digitosReais(b2) ){return 1;}
 		
-		for(int i = big_size(b2); i != 1; i--){
+	else{
+		
+		//b1 < b2
+		if( digitosReais(b1) < digitosReais(b2) ){return -1;}
+		
+		else{
 			
-			diferenca = b1[i] - b2[i];
+			//b1 == b2
+			for(int i = digitosReais(b1); i != 0; i--){
 			
-			if(diferenca != 0){return diferenca;}
-			
+				diferenca = b1[i] - b2[i];
+				
+				if(diferenca != 0){return diferenca;}
+			}
 		}
-		
-	}
-	else{ //b1 < b2 ou iguais
-		
-		for(int i = big_size(b1); i != 0; i--){
-			
-			diferenca = b1[i] - b2[i];
-			
-			if(diferenca != 0){return diferenca;}
-			
-			
-		}
-		
 	}
 	
 	return 0;
@@ -180,77 +190,48 @@ int big_cmp(const BIG_INT b1, const BIG_INT b2) {
  *   A função retorna true se a operação for bem sucedida.
  */
  
-void verificarCarry(int bm[], int tamanho_bigint){
+bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm) {
 	
 	int carry = 0;
+	int tamanho_bm;
 	
-	for(int i = 0; i <= tamanho_bigint; i++){
+    //Descobrir qual é o maior entre b1 e b2
+	if ( big_size(b1) > big_size(b2) ) {
+		tamanho_bm = big_size(b1);
+	}
 		
-		if(bm[i] >= 10){
-			
-			bm[i] = bm[i] - 10;
-			carry = 1;
-			bm[i+1] = bm[i+1] + carry;
-			carry = 0;
-			
-		}
+	else {
 		
+		tamanho_bm = big_size(b2);
+    
 	}
 	
-}
+	//Percorrer o array para ir fazendo as somas com o respetivo carry
+	for (int i = 1; i <= tamanho_bm; i++) {
+		
+		int c = carry;
+		
+		if ( i <= big_size(b1) ){c += b1[i];}
+        
+		if ( i <= big_size(b2) ){c += b2[i];}
 
-bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
-	
-	int j = 0;
-	
-	if( big_size(b1) > big_size(b2) ){
-		
-		for(int i = 1; i <= big_size(b2); i++){
-			
-			bm[i] = b1[i] + b2[i];
-			j = i;
-		}
-		
-		
-		while(j <= big_size(b1)){
-			
-			bm[j] = b1[j];
-			j++;
-			
-		}
-		
-		verificarCarry(bm, j);
-		
-		
-		//FALTA VERIFICAR OVERFLOW AQUI!!
-		
-		return true;
+		carry = c / 10;
+		bm[i] = c % 10;
 	}
-	
-	else{
+    
+	//Aumentar sempre 1 no tamanho da array quando o carry for 1
+	if (carry == 1) {
 		
-		for(int i = 1; i <= big_size(b1); i++){
-			
-			bm[i] = b1[i] + b2[i];
-			j = i;
-			
-		}
+		bm[tamanho_bm + 1] = carry;
 		
-		while(j <= big_size(b2)){
-			
-			bm[j] = b2[j];
-			j++;
-			
-		}
-		
-		//verificarCarry(bm);
-		
-		//FALTA VERIFICAR OVERFLOW AQUI!
-		
-		return true;
-
+		tamanho_bm++;
 	}
+    
+	//Retorna falso caso tenha havido OVERFLOW
+	if( bm[tamanho_bm + 1] >= MAX_DIGITS ){return false;}
 	
+	bm[0] = tamanho_bm;
+	return true;	
 }
 
 /**
@@ -264,12 +245,37 @@ bool big_add(const BIG_INT b1, const BIG_INT b2, BIG_INT bm){
  * Retorno:
  *   A função retorna true ou false se sucesso ou insucesso ("overlfow")
  */	
+
 bool big_mul_dig(const BIG_INT b, int d, BIG_INT bres) {
-	 // TO IMPLEMENT
-	return false;
+	
+	big_copy(b,bres);
+	
+    // Verifica se d é válido (entre 0 e 9) e retorna falso caso não seja
+    if (d < 0 || d > 9) {return false;}
+
+	// Se d for 0
+	if (d == 0) {
 		
+		// Define o tamanho do array como 1
+		bres[0] = 1;
+        
+		// Define o valor como 0
+		bres[1] = 0;
+        
+	} 
+	else{
+		
+		//Somar d vezes 
+		for(int i = 0; i <= d; i++){
+			
+			if (big_add(bres,b,bres) == false ){return false;}
+			
+		}
+		
+	}
+	
+	return true;
 }
- 
 
 /**
  * Descrição:
