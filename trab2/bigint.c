@@ -266,9 +266,12 @@ bool big_mul_dig(const BIG_INT b, int d, BIG_INT bres) {
 	else{
 		
 		//Somar d vezes 
-		for(int i = 0; i <= d; i++){
+		while( d > 1){
 			
-			if (big_add(bres,b,bres) == false ){return false;}
+			if(big_add(bres, b, bres) == false){return false;}
+			
+			
+			d--;
 			
 		}
 		
