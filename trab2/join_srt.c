@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX_LINE 1000
+
+void erro(){
+	
+	printf("Erro ao converter!");
+	
+}
+
 int main() {
 	
     FILE *file1, *file2, *output;
-    char line1[1000];
-    char line2[1000];
+    char line1[MAX_LINE];
+    char line2[MAX_LINE];
 
     //Abrir os dois ficheiros 
     file1 = fopen( "padrinho2_1.srt", "r" );
@@ -14,9 +22,7 @@ int main() {
 	//Se não houver nada nos ficheiros da erro
     if ( file1 == NULL || file2 == NULL ){
 		
-        perror( "Erro ao abrir os ficheiros" );
-        
-        exit( EXIT_FAILURE );
+        erro();
         
     }
 
@@ -26,14 +32,12 @@ int main() {
     //Se não criar o ficheiro de output da erro
     if ( output == NULL ){
 		
-        perror( "Erro ao abrir o ficheiro final" );
-        
-        exit( EXIT_FAILURE );
+        erro();
         
     }
 	
-	int number1;
-	int number2;
+	int legendNumber1;
+	int legendNumber2;
 	
     //Processar o primeiro ficheiro
     while ( fgets( line1, sizeof(line1), file1 ) != NULL ){
@@ -43,7 +47,7 @@ int main() {
         if ( sscanf( line1, "%*d:%*d:%*d,%*d --> %*d:%*d:%*d,%*d" ) == 0 ){
 			
             //Incrementar o numero da legenda
-            sscanf( line1, "%d", &number1 );
+            sscanf( line1, "%d", &legendNumber1 );
             
         }
     }
@@ -60,7 +64,7 @@ int main() {
         if ( sscanf( line2, "%*d:%*d:%*d,%*d --> %*d:%*d:%*d,%*d" ) == 0 ){
 			
             //Incrementar o numero da legenda
-            sscanf( line2, "%d", &number2 );
+            sscanf( line2, "%d", &legendNumber2);
             
         }
     }
@@ -70,7 +74,7 @@ int main() {
     fclose( file2 );
     fclose( output );
 
-    printf( "Ficheiros combinados com sucesso\n" );
+    printf( "Sucesso!" );
 
     return 0;
 }
