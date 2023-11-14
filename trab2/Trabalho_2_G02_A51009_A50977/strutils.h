@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #define MAX_LETRAS 'z' - 'a' +1  //MAX_LETRAS = 26
-#define MAX_PALAVRAS 100        // para o codigo do middle_name_compressed
+#define MAX_PALAVRAS 100         //Usado na função name_middle_compressed
 /**
  * Descrição:
  * 	Cria a string "dst" a partir da string "src", removendo os espaços iniciais e finais 
