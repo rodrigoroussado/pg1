@@ -1,3 +1,7 @@
+//Grupo 02
+//Alunos João Santos (nº51009) e Rodrigo Viegas (nº50977)
+//LT13D
+
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
