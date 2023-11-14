@@ -1,3 +1,7 @@
+//Grupo 02
+//Alunos João Santos (nº51009) e Rodrigo Viegas (nº50977)
+//LT13D
+
 /*------------------------------------------------------------
  * Contem funções para efectuar cálculos com inteiros "grandes"
  *------------------------------------------------------------*/
