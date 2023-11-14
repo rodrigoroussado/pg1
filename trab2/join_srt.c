@@ -2,60 +2,75 @@
 #include <stdlib.h>
 
 int main() {
+	
     FILE *file1, *file2, *output;
-    char line[1000];
+    char line1[1000];
+    char line2[1000];
 
-    // Abre os dois arquivos .srt para leitura
-    file1 = fopen("padrinho2_1.srt", "r");
-    file2 = fopen("padrinho2_2.srt", "r");
+    //Abrir os dois ficheiros 
+    file1 = fopen( "padrinho2_1.srt", "r" );
+    file2 = fopen( "padrinho2_2.srt", "r" );
 
-    if (file1 == NULL || file2 == NULL) {
-        perror("Erro ao abrir um dos arquivos.");
-        exit(EXIT_FAILURE);
+	//Se não houver nada nos ficheiros da erro
+    if ( file1 == NULL || file2 == NULL ){
+		
+        perror( "Erro ao abrir os ficheiros" );
+        
+        exit( EXIT_FAILURE );
+        
     }
 
-    // Abre o arquivo de saída para escrita
-    output = fopen("output.srt", "w");
-    if (output == NULL) {
-        perror("Erro ao abrir o arquivo de saída.");
-        exit(EXIT_FAILURE);
+    //Abrir o ficheiro de escrita
+    output = fopen( "legendasJuntas.srt", "w" );
+    
+    //Se não criar o ficheiro de output da erro
+    if ( output == NULL ){
+		
+        perror( "Erro ao abrir o ficheiro final" );
+        
+        exit( EXIT_FAILURE );
+        
     }
+	
+	int number1;
+	int number2;
+	
+    //Processar o primeiro ficheiro
+    while ( fgets( line1, sizeof(line1), file1 ) != NULL ){
+        fprintf( output, "%s", line1 );
 
-    // Processa o primeiro arquivo .srt
-    while (fgets(line, sizeof(line), file1) != NULL) {
-        fprintf(output, "%s", line);
+        //Ver se a linha tem todos o tempo e a legenda
+        if ( sscanf( line1, "%*d:%*d:%*d,%*d --> %*d:%*d:%*d,%*d" ) == 0 ){
+			
+            //Incrementar o numero da legenda
+            sscanf( line1, "%d", &number1 );
+            
+        }
+    }
+    
+    //Adicionar uma linha para separar o ficheiro 1 do ficheiro 2 
+    fprintf( output, "\n" );
 
-        // Verifica se a linha contém o número da legenda e o tempo
-        if (sscanf(line, "%*d:%*d:%*d,%*d --> %*d:%*d:%*d,%*d") == 0) {
-            // Incrementa o número da legenda
-            int number;
-            sscanf(line, "%d", &number);
+    //Processar o segundo ficheiro
+    while ( fgets( line2, sizeof(line2), file2 ) != NULL ){
+        fprintf(output, "%s", line2);
+
+		
+        //Ver se a linha tem todos o tempo e a legenda
+        if ( sscanf( line2, "%*d:%*d:%*d,%*d --> %*d:%*d:%*d,%*d" ) == 0 ){
+			
+            //Incrementar o numero da legenda
+            sscanf( line2, "%d", &number2 );
             
         }
     }
 
-    // Adiciona uma linha em branco para separar os conteúdos
-    fprintf(output, "\n");
+    //Fechar todos os ficheiros
+    fclose( file1 );
+    fclose( file2 );
+    fclose( output );
 
-    // Processa o segundo arquivo .srt
-    while (fgets(line, sizeof(line), file2) != NULL) {
-        fprintf(output, "%s", line);
-
-        // Verifica se a linha contém o número da legenda e o tempo
-        if (sscanf(line, "%*d:%*d:%*d,%*d --> %*d:%*d:%*d,%*d") == 0) {
-            // Incrementa o número da legenda
-            int number;
-            sscanf(line, "%d", &number);
-            
-        }
-    }
-
-    // Fecha os arquivos
-    fclose(file1);
-    fclose(file2);
-    fclose(output);
-
-    printf("Arquivos .srt combinados com sucesso!\n");
+    printf( "Ficheiros combinados com sucesso\n" );
 
     return 0;
 }
