@@ -1,3 +1,7 @@
+//Grupo 02
+//Alunos João Santos (nº51009) e Rodrigo Viegas (nº50977)
+//LT13D
+
 #include "strutils.h"
     
 /**
@@ -13,7 +17,7 @@
 
 void str_trim(char src[], char dst[]) {
 	
-     //"Limpar" os espaços iniciais
+    //"Limpar" os espaços iniciais
    
 		//Encontrar a posição em que está a primeira letra na string
 		int i = 0;					//Variável usada para percorrer a string "src"
@@ -28,8 +32,8 @@ void str_trim(char src[], char dst[]) {
 	bool espaco_anterior = false;
 	while(src[i] != '\0'){
 		
-		/*Se encontrar um espaço (sem ter havido espaço anteriormente), "anota" que há um espaço, 
-		*copia o espaço e passa à próxima iteração*/
+		//Se encontrar um espaço (sem ter havido espaço anteriormente), "anota" que há um espaço, 
+		//copia o espaço e passa à próxima iteração
 		
 		if(src[i] == ' ' && espaco_anterior == false){
 			
@@ -40,8 +44,8 @@ void str_trim(char src[], char dst[]) {
 			
 			}
 		
-		/*Se encontrar um espaço (quando há um antes deste), ignora todos os espaços até
-		encontrar uma letra e copia esta para dst*/
+		//Se encontrar um espaço (quando há um antes deste), ignora todos os espaços até
+		//encontrar uma letra e copia esta para dst
 		
 		if(src[i] == ' ' && espaco_anterior == true){
 			
@@ -166,6 +170,7 @@ void snake_2_camel_case(char src[], char dst[]) {
  *     "ator" e "rota1" não são anagramas
  */
  
+//Função que verifica se uma string tem apenas letras
 static bool apenasLetras(char str[]){
 	
 	for(int i = 0; str[i] != '\0'; i++){
@@ -182,7 +187,7 @@ static bool apenasLetras(char str[]){
 	
 }
 
-
+//Função que verifica se uma string tem pelo menos duas letras
 static bool letrasMinimas(char str[]){
 	
 	int i = 0;
@@ -201,7 +206,7 @@ static bool letrasMinimas(char str[]){
 	
 }
  
- 
+//Função que coloca todas as MAX_LETRAS posições de um contador a 0
 static void limparContadores(int contador[]){
 	
 	for(int i = 0; i < MAX_LETRAS; i++){
@@ -224,11 +229,11 @@ bool anagram(char str1[], char str2[]) {
 	
 	if( !(apenasLetras(str1) && apenasLetras(str2)) ){return false;}
 	
-	//Limpar os contadores (colocar os elementos de 0 a MAX_LETRAS - 1 a 0)
+	//Limpar os contadores
 	limparContadores(contador1);
 	limparContadores(contador2);
 	
-	//conta quantas letras ha na str1
+	//Conta quantas letras há em str1
 	for (int i = 0; str1[i] != '\0'; i++) {
 		
 		char c = str1[i];
@@ -246,7 +251,7 @@ bool anagram(char str1[], char str2[]) {
 		}
 	}
 
-	//conta quantas letras ha na str2
+	//Conta quantas letras há em str2
 	for (int i = 0; str2[i] != '\0'; i++) {
 		
 		char c = str2[i];
@@ -265,7 +270,7 @@ bool anagram(char str1[], char str2[]) {
 		}
 	}
 
-	//compara as duas strings
+	//Compara as duas strings
 	for (int i = 0; i < MAX_LETRAS; i++) {
 		
 		if (contador1[i] != contador2[i]) {
@@ -297,9 +302,12 @@ bool anagram(char str1[], char str2[]) {
  *    Se o nome original for:  "  pedro manuel  de  RODRIGUES  ", a conversão é:  "Pedro M. Rodrigues".
  */
 
+//Função que verifica se um determinado caractere é espaço, tab ou return
 static int e_espaco(char c) {
 	return c == ' ' || c == '\t' || c == '\n';
 }
+
+//Função que converte uma letra minúscula em maiúscula
 
 static void maiuscula(char *str) {
 	if (*str >= 'a' && *str <= 'z') {
@@ -311,7 +319,7 @@ static void maiuscula(char *str) {
 
 bool name_middle_compressed(char orig[], char result[]) {
 	
-	//Remover os espaços finais e iniciais - podemos ver o str_trim
+	//Remover os espaços finais e iniciais
 	char *inicio = orig;
 	
 	while (e_espaco(*inicio)) {
@@ -326,11 +334,11 @@ bool name_middle_compressed(char orig[], char result[]) {
 		--fim;
 	}
 	
-	//poem o determinador no fim da string
+	//Põe o terminador no fim da string
 	*(fim + 1) = '\0';   
 
 
-	//Dibide o nome em varias partes - podemos depois ver se da para usar o str_split
+	//Divide o nome em varias partes
 	char *parts[MAX_PALAVRAS];
 	int numParts = 0;
 	int largura = strlen(inicio);
@@ -338,14 +346,14 @@ bool name_middle_compressed(char orig[], char result[]) {
 
 	while (i < largura) {
 		
-		//pula espaços iniciais
+		//Ignora os espaços iniciais
 		while (i < largura && e_espaco(inicio[i])) {
 			
 			++i;
             
 		}
 
-		//enciontra o fim 
+		//Encontra o fim 
         
 		j = i;
 		while (j < largura && !e_espaco(inicio[j])) {
@@ -354,7 +362,7 @@ bool name_middle_compressed(char orig[], char result[]) {
             
 		}
 
-		//copia o array
+		//Copia o array
 		if (j > i) {
 			
 			inicio[j] = '\0';
@@ -367,26 +375,26 @@ bool name_middle_compressed(char orig[], char result[]) {
 		
 	}
 
-	//ve se o nome é valido - mais que 2 nomes
-	if (numParts < 2) {return false;}
+	//Se o nome tiver menos de duas palavras, é inválido - retorna falso
+	if(numParts < 2){return false;}
 
 	//Converter o nome para o formato pedido
 	int resultLargura = 0;
 
 	//poem em maiuscula a primeira letra de cada parte
-	for (i = 0; i < numParts; ++i) {maiuscula(parts[i]);}
+	for (i = 0; i < numParts; ++i){maiuscula(parts[i]);}
 
 	//Escreve o primeiro nome
 	resultLargura += sprintf(result + resultLargura, "%s ", parts[0]);
 
-	//comprime os nomes do meio
+	//Comprime os nomes do meio
 	for (i = 1; i < numParts - 1; ++i) {
 		if (strlen(parts[i]) > 2) {
 			resultLargura += sprintf(result + resultLargura, "%c. ", parts[i][0]);
 		}
 	}
 
-	//escrve o ultimo nome
+	//Escreve o último nome
 	sprintf(result + resultLargura, "%s", parts[numParts - 1]);
 
 	return true;
@@ -407,19 +415,20 @@ int str_split(char text[], word_t words[], int size) {
     char *fim = text;
 
     while (*fim != '\0' && contador < size) {
-		//encontra o inicio da palavra tirando tudo o que ´eespaço e mudanaças de linha ou mesmo tab
+		
+		//Encontra o início da palavra tirando espaços, return e tabs
         while (*inicio != '\0' && (*inicio == ' ' || *inicio == '\t' || *inicio == '\n')) {
 			
             inicio++;
             
         }
 
-        if (*inicio == '\0') {   //caso a string esteja vazia e chegamos ao fim saimos so while
+        if (*inicio == '\0') {   //Caso a string esteja vazia e chegamos ao fim saimos do while
 			
             break;
             
         }
-		// fim = inicio para começar a ler de onde parou anteriormente para agora encontrat o fim da palavra
+		//Começar a ler de onde parou para encontrar o fim da palavra
         fim = inicio;
 
         while (*fim != '\0' && (*fim != ' ' && *fim != '\t' && *fim != '\n')) {
@@ -431,7 +440,7 @@ int str_split(char text[], word_t words[], int size) {
         int largura_word = fim - inicio;
 
 
-        strncpy (words[contador], inicio, largura_word);    //copia "start" vezes para words 
+        strncpy(words[contador], inicio, largura_word);    //copia "start" vezes para words 
         words[contador][largura_word] = '\0';             //adiciona \0 no final da string!!
 
         contador++;                                     //vai sempre interando ate end = \0
