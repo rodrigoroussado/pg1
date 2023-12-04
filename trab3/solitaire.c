@@ -4,6 +4,10 @@
 #include "graphics.h"
 #include "cards.h"
 
+//Board board; com a informação das cartas, baralhos, etc.
+//void mouse(){}
+//void timer(){}
+
 
 //Definir estruturas
 
@@ -16,8 +20,10 @@
 int main(){
 	
 	graph_init2("Solitaire", MAX_WIDTH, MAX_HEIGHT);
-	//game_init();
-	background_draw();
+	//mouse_register(mouse);
+	//times_register(timer,TIMER);
+	//boardInit();
+	background_draw(/*&board*/);
 	graph_start(); //DEFINIR EVENTOS DE RATO AQUI!
 	
 }
