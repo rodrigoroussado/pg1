@@ -14,7 +14,7 @@ Card c[MAX_CARDS];
 
 int dimC = 0;
 	
-	
+
 
 void criarBaralhoOrdenado(){
 	
@@ -30,5 +30,24 @@ void criarBaralhoOrdenado(){
 		}
 		
 	}
+	
+}
+
+
+bool transferirCarta(Card pilhaInicial[], Card pilhaFinal[], int *dimPI, int *dimPF){
+	
+	//Verificar se existem elementos na pilha inicial
+	if(*dimPI == 0){return false;}
+	
+	//Copiar elemento da posição dim-1 da pilha inicial para a posição dim da pilha final
+	pilhaFinal[*dimPF] = pilhaInicial[(*dimPI)-1];
+	
+	//Atualizar dim da pilha inicial (dim--)
+	*dimPI--;
+	
+	//Atualizar dim da pilha final (dim++)
+	*dimPF++;
+	
+	return true;
 	
 }
