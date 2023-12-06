@@ -23,13 +23,13 @@ void background_draw(){
 	graph_rect(X_TIMER_RECT, Y_TIMER_RECT, TIMER_RECT_WIDTH, TIMER_RECT_HEIGHT, c_gray, true);
 	
 	//Sombras (stacks vazias)
-	graph_rect(X_DECK_STACK, Y_DECK_STACK, CARD_WIDTH, CARD_HEIGHT, EMPTY_PILE_COLOR_TOP, true); 		//Deck Stack
-	graph_rect(X_DISCARD_STACK, Y_DISCARD_STACK, CARD_WIDTH, CARD_HEIGHT, EMPTY_PILE_COLOR_TOP, true);  //Discard Stack
+	graph_rect(X_DECK_STACK, Y_DECK_STACK, CARD_WIDTH, CARD_HEIGHT, c_white, false); 		//Deck Stack
+	graph_rect(X_DISCARD_STACK, Y_DISCARD_STACK, CARD_WIDTH, CARD_HEIGHT, c_white, false);  //Discard Stack
 	
-	graph_rect(X_FOUNDATION_STACK0, Y_FOUNDATION_STACK0, CARD_WIDTH, CARD_HEIGHT, EMPTY_PILE_COLOR_TOP, true);
-	graph_rect(X_FOUNDATION_STACK1, Y_FOUNDATION_STACK1, CARD_WIDTH, CARD_HEIGHT, EMPTY_PILE_COLOR_TOP, true);
-	graph_rect(X_FOUNDATION_STACK2, Y_FOUNDATION_STACK2, CARD_WIDTH, CARD_HEIGHT, EMPTY_PILE_COLOR_TOP, true);
-	graph_rect(X_FOUNDATION_STACK3, Y_FOUNDATION_STACK3, CARD_WIDTH, CARD_HEIGHT, EMPTY_PILE_COLOR_TOP, true);
+	graph_rect(X_FOUNDATION_STACK0, Y_FOUNDATION_STACK0, CARD_WIDTH, CARD_HEIGHT, c_white, false);
+	graph_rect(X_FOUNDATION_STACK1, Y_FOUNDATION_STACK1, CARD_WIDTH, CARD_HEIGHT, c_white, false);
+	graph_rect(X_FOUNDATION_STACK2, Y_FOUNDATION_STACK2, CARD_WIDTH, CARD_HEIGHT, c_white, false);
+	graph_rect(X_FOUNDATION_STACK3, Y_FOUNDATION_STACK3, CARD_WIDTH, CARD_HEIGHT, c_white, false);
 	
 	graph_rect(X_CARD_STACK0, Y_CARD_STACK0, CARD_WIDTH, CARD_HEIGHT, c_white, false);
 	graph_rect(X_CARD_STACK1, Y_CARD_STACK1, CARD_WIDTH, CARD_HEIGHT, c_white, false);
@@ -43,3 +43,23 @@ void background_draw(){
 	
 }
 
+
+
+void draw_board(Board board){
+	
+	background_draw(); //Desenhar os elementos estáticos
+	draw_counters();   //Desenhar os contadores de pontos, jogadas e tempo
+	//draw_cards
+	
+}
+
+
+
+void draw_counters(Board board){
+	
+	//Converter valores de board -> points, board -> plays e board -> time para string
+	graphtext2(); //Points
+	graphtext2(); //Plays
+	graphtext2(); //Time
+	
+}
