@@ -41,6 +41,9 @@ typedef struct{
 	
 	Pile piles[MAX_PILES];
 	int nPiles;
+	int points;
+	int plays;
+	//Contador de tempo aqui!
 	
 	}Board;
 	
@@ -50,6 +53,8 @@ typedef struct{
 void criarBaralhoOrdenado();
 
 
+//Função que transfere x cartas de uma pilha para a outra
+bool transferirCarta(Card pilhaInicial[], Card pilhaFinal[], int *dimPI, int *dimPF);
 
 
 
