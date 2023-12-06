@@ -13,8 +13,6 @@
 
 #define BACKGROUND_COLOR graph_rgb(41,153,97)
 #define PANEL_COLOR graph_rgb(64,64,64)
-#define EMPTY_PILE_COLOR_TOP graph_rgb(20,120,50)
-#define EMPTY_PILE_COLOR_BOTTOM graph_rgb(82,74,67)
 
 #define X1_INFO 20
 #define Y1_INFO 20
@@ -92,5 +90,11 @@
 
 /*Função que desenha o fundo do tabuleiro de jogo*/
 void background_draw();
+
+/*Função que desenha todo o board (elementos estáticos e móveis)*/
+void draw_board(Board board);
+
+/*Função que desenha os contadores de jogadas, pontos e tempo*/
+void draw_counters(Board board);
 
 #endif
