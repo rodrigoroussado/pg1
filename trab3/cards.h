@@ -5,7 +5,10 @@
 #include "pg/pglib.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
+#define TIME_TICK 1
 
 #define PILETYPE_TOP 0
 #define PILETYPE_DOWN 1
@@ -15,7 +18,12 @@
 
 #define MAX_PILES 13
 
-#define MAX_NAIPE 4
+#define MAX_SUIT 4
+#define MAX_VALUE 13
+
+#define IMAGE_TYPE 	".png"
+#define CARD_BACK	"b"
+
 
 typedef struct{
 	
@@ -39,14 +47,18 @@ typedef struct{
 
 typedef struct{
 	
-	Pile piles[MAX_PILES];
 	int nPiles;
+	Pile piles[MAX_PILES];
 	int points;
 	int plays;
 	//Contador de tempo aqui!
 	
 	}Board;
 	
+	
+	
+//Função que inicia o board
+void boardInit(Board board);
 
 
 //Função que cria o baralho ordenado num array
@@ -56,6 +68,21 @@ void criarBaralhoOrdenado();
 //Função que transfere x cartas de uma pilha para a outra
 bool transferirCarta(Card pilhaInicial[], Card pilhaFinal[], int *dimPI, int *dimPF);
 
+
+//Função que ordena as cartas de forma aleatória
+void baralhar();
+
+
+//Função que regista os eventos do rato
+//void mouseEventHandler(MouseEvent me)
+
+
+//Função que "traduz" a struct da carta para o ficheiro correspondente
+bool getCardName(int suit, int value, bool visible, char cardName[]);
+
+
+//Função que baralha o deck
+void shuffle(Card array[], int size);
 
 
 #endif
