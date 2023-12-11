@@ -93,7 +93,7 @@
 void background_draw();
 
 /*Função que desenha todo o board (elementos estáticos e móveis)*/
-void draw_board(/*Board board*/);
+void draw_board(Board *board);
 
 /*Função que desenha os contadores de jogadas, pontos e tempo*/
 void draw_counters(Board board);
