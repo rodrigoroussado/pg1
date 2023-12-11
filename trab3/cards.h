@@ -66,7 +66,7 @@ void criarBaralhoOrdenado();
 
 
 //Função que transfere x cartas de uma pilha para a outra
-bool transferirCarta(Card pilhaInicial[], Card pilhaFinal[], int *dimPI, int *dimPF);
+bool transferirCarta(Pile *pi, Pile *pf);
 
 
 //Função que ordena as cartas de forma aleatória
@@ -83,6 +83,7 @@ bool getCardName(int suit, int value, bool visible, char cardName[]);
 
 //Função que baralha o deck
 void shuffle(Pile *pile);
+
 
 //Função que inicializa uma pile
 Pile pileInit(int pileType, int nVisible, int x, int y);
