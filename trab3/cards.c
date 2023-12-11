@@ -8,39 +8,85 @@
 #include <stdbool.h>
 
 
-//board_init aqui!
-
-
 //Variáveis globais
-Card c[MAX_CARDS];
-int dimC = 0;
-
 int curr_card_visible = true;
-	
-	
-void boardInit(Board board){
 
-	board.nPiles = 0;
-	board.plays = 0;
-	board.points = 0;
-	criarBaralhoOrdenado();
-	shuffle(c, MAX_CARDS-1);
+
+void addPile(Board *board, Pile pile){
 	
- 	
+	board->piles[board->nPiles++] = pile;
+	
+}
+
+
+void shuffle(Pile *p){
+	
+	//Dar a seed para a geração aleatória baseada na hora
+	srand(time(NULL));
+	
+	//Percorrer o array de cartas (baralho ordenado)
+	for(int i = p->nCards; i > 0; i--){
+		
+		//Gerar um número aleatório (índice do array da carta que vai ser trocada com a da posição i)
+		int j = rand() % (i+1);
+		
+		//Trocar a posição das cartas da posição i e j
+		Card aux = p->cards[i];
+		p->cards[i] = p->cards[j];
+		p->cards[j] = aux;
+		
+	}
+	
+}
+
+
+void copyCards(Pile pile_inicial, Pile *pile_final){
+	
+	for(int i = 0; i < pile_inicial.nCards; i++){
+		
+		pile_final->cards[i] = pile_inicial.cards[i];
+		
+	}
+	
+}
+
+Pile pileInit(int pileType, int nVisible, int x, int y){
+	
+	Pile p;
+	p.pileType = pileType;
+	p.nVisible = nVisible;
+	p.x = x;
+	p.y = y;
+	p.nCards = 0;
+	
+	return p;
+	
+}
+	
+void boardInit(Board *board){
+
+	
+	board->nPiles = 0;
+	board->plays = 0;
+	board->points = 0;
+	
+	addPile(board, pileInit(PILETYPE_DOWN, 0, X_DECK_STACK, Y_DECK_STACK));
+ 	criarBaralhoOrdenado(&board->piles[0]);
+	shuffle(&board->piles[0]);
 
 }
 
 
-void criarBaralhoOrdenado(){
+void criarBaralhoOrdenado(Pile *p){
 	
-	for(int n = 0; n < MAX_SUIT; n++){
+	for(int n = 0; n < p->nCards; n++){
 		
-		for(int j = 0; j < MAX_CARDS; j++){
+		for(int j = 0; j < p->nCards; j++){
 			
 			Card x;
 			x.suit = n;
 			x.value = j;
-			c[dimC++] = x;
+			p->cards[p->nCards++] = x;
 			
 		}
 		
@@ -49,7 +95,7 @@ void criarBaralhoOrdenado(){
 }
 
 
-bool transferirCarta(Card pilhaInicial[], Card pilhaFinal[], int *dimPI, int *dimPF){
+bool transferirCarta(Card pilhaInicial[], Card pilhaFinal[], int *dimPI, int *dimPF){ //MUDAR - PASSAR APENAS 2 PILE COMO PARÂMETROS!
 	
 	//Verificar se existem elementos na pilha inicial
 	if(*dimPI == 0){return false;}
@@ -93,27 +139,5 @@ bool getCardName(int suit, int value, bool visible, char cardName[]) {
 		sprintf(cardName, "%c%c%s", suits[suit], values[value], IMAGE_TYPE);
 	}
 	return true;
-}
-
-
-
-void shuffle(Card array[], int size){
-	
-	//Dar a seed para a geração aleatória baseada na hora
-	srand(time(NULL));
-	
-	//Percorrer o array de cartas (baralho ordenado)
-	for(int i = size-1; i > 0; i--){
-		
-		//Gerar um número aleatório (índice do array da carta que vai ser trocada com a da posição i)
-		int j = rand() % (i+1);
-		
-		//Trocar a posição das cartas da posição i e j
-		Card aux = array[i];
-		array[i] = array[j];
-		array[j] = aux;
-		
-	}
-	
 }
 
