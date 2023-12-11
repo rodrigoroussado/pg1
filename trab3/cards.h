@@ -38,7 +38,7 @@ typedef struct{
 	int nCards;
 	Card cards[MAX_CARDS];
 	int pileType;	//TOP, DOWN ou MIX
-	int nVisible; 	//só usado se pileType = 2 (MIX)
+	int nVisible;
 	int x; 		 	//Posição da pilha no board
 	int y;
 	
@@ -58,7 +58,7 @@ typedef struct{
 	
 	
 //Função que inicia o board
-void boardInit(Board board);
+void boardInit(Board *board);
 
 
 //Função que cria o baralho ordenado num array
@@ -82,7 +82,18 @@ bool getCardName(int suit, int value, bool visible, char cardName[]);
 
 
 //Função que baralha o deck
-void shuffle(Card array[], int size);
+void shuffle(Pile *pile);
+
+//Função que inicializa uma pile
+Pile pileInit(int pileType, int nVisible, int x, int y);
+
+
+//Função que adiciona uma pile ao board
+void addPile(Board *board, Pile pile);
+
+
+//Função que copia uma pile para outra
+void copyCards(Pile pile_inicial, Pile *pile_final);
 
 
 #endif
