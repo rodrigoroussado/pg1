@@ -2,6 +2,8 @@
 #include "pg/pglib.h"
 #include "graphics.h"
 #include "cards.h"
+#include <stdlib.h>
+#include <time.h>
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -11,14 +13,27 @@
 
 //Variáveis globais
 Card c[MAX_CARDS];
-
 int dimC = 0;
+
+int curr_card_visible = true;
 	
+	
+void boardInit(Board board){
+
+	board.nPiles = 0;
+	board.plays = 0;
+	board.points = 0;
+	criarBaralhoOrdenado();
+	shuffle(c, MAX_CARDS-1);
+	
+ 	
+
+}
 
 
 void criarBaralhoOrdenado(){
 	
-	for(int n = 0; n < MAX_NAIPE; n++){
+	for(int n = 0; n < MAX_SUIT; n++){
 		
 		for(int j = 0; j < MAX_CARDS; j++){
 			
@@ -51,3 +66,54 @@ bool transferirCarta(Card pilhaInicial[], Card pilhaFinal[], int *dimPI, int *di
 	return true;
 	
 }
+
+
+
+bool getCardName(int suit, int value, bool visible, char cardName[]) {
+	
+	//Buscar os nipes ( d = ouros; h = copas; c= paus; s = espadas)
+	char suits[] = { 'd', 'h', 's', 'c' };	
+	
+	//Buscar os 13 valores	( t = 10; q = rainha; j = valete; k = rei; a = Ás)								
+	char values[] = { '2','3','4','5','6','7','8','9','t','q','j','k','a'};
+
+	//Se a carta não for visivel damos print na carta virada ao contrario
+	//Em que o primeiro %s é o nipe e o segundo %s é o valor
+	//Neste caso o %s sendo a parte de tras da carta será "b" e nao terá valor logo o segundo %s refere o tipo da imagem (.png)
+  	if ( !visible ) sprintf(cardName, "%s%s", CARD_BACK, IMAGE_TYPE);
+  	
+
+  	else {
+
+		//Se os valores nao tiverem dentro dos intervalos damos false
+		if ( suit < 0 || suit >= MAX_SUIT || value < 0 || value >= MAX_VALUE ) {return false;}
+		
+		//Se passar por todos os testes escrevemos a carta
+		//Aqui o priemiro %c sera o nipe, o segundo %c será o valor e o %s sera o tipo da imagem (.png)
+		sprintf(cardName, "%c%c%s", suits[suit], values[value], IMAGE_TYPE);
+	}
+	return true;
+}
+
+
+
+void shuffle(Card array[], int size){
+	
+	//Dar a seed para a geração aleatória baseada na hora
+	srand(time(NULL));
+	
+	//Percorrer o array de cartas (baralho ordenado)
+	for(int i = size-1; i > 0; i--){
+		
+		//Gerar um número aleatório (índice do array da carta que vai ser trocada com a da posição i)
+		int j = rand() % (i+1);
+		
+		//Trocar a posição das cartas da posição i e j
+		Card aux = array[i];
+		array[i] = array[j];
+		array[j] = aux;
+		
+	}
+	
+}
+
