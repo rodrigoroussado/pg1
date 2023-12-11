@@ -95,19 +95,19 @@ void criarBaralhoOrdenado(Pile *p){
 }
 
 
-bool transferirCarta(Card pilhaInicial[], Card pilhaFinal[], int *dimPI, int *dimPF){ //MUDAR - PASSAR APENAS 2 PILE COMO PARÂMETROS!
+bool transferirCarta(Pile *pi, Pile *pf){ 
 	
 	//Verificar se existem elementos na pilha inicial
-	if(*dimPI == 0){return false;}
+	if(pi->nCards == 0){return false;}
 	
 	//Copiar elemento da posição dim-1 da pilha inicial para a posição dim da pilha final
-	pilhaFinal[*dimPF] = pilhaInicial[(*dimPI)-1];
+	pf->cards[pf->nCards] = pi->cards[(pi->nCards)];
 	
-	//Atualizar dim da pilha inicial (dim--)
-	*dimPI--;
+	//Atualizar nCards da pilha inicial (dim--)
+	pi->nCards--;
 	
-	//Atualizar dim da pilha final (dim++)
-	*dimPF++;
+	//Atualizar nCards da pilha final (dim++)
+	pf->nCards++;
 	
 	return true;
 	
