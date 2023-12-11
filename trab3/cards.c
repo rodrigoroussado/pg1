@@ -70,9 +70,16 @@ void boardInit(Board *board){
 	board->plays = 0;
 	board->points = 0;
 	
-	addPile(board, pileInit(PILETYPE_DOWN, 0, X_DECK_STACK, Y_DECK_STACK));
+	addPile(board, pileInit(PILETYPE_DOWN, 0, X_DECK_STACK, Y_DECK_STACK)); //Deck pile
  	criarBaralhoOrdenado(&board->piles[0]);
 	shuffle(&board->piles[0]);
+
+	addPile(board, pileInit(PILETYPE_TOP, 0, X_DISCARD_STACK, Y_DISCARD_STACK)); //Discard pile
+	
+	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK0, Y_FOUNDATION_STACK0));
+	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK1, Y_FOUNDATION_STACK1));
+	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK2, Y_FOUNDATION_STACK2));
+	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK3, Y_FOUNDATION_STACK3));
 
 }
 
