@@ -44,11 +44,10 @@ void background_draw(){
 }
 
 
-
-void draw_board(Board board){
+void draw_board(/*Board board*/){
 	
 	background_draw(); //Desenhar os elementos estáticos
-	draw_counters();   //Desenhar os contadores de pontos, jogadas e tempo
+	//draw_counters();   //Desenhar os contadores de pontos, jogadas e tempo
 	//draw_cards
 	
 }
@@ -58,8 +57,8 @@ void draw_board(Board board){
 void draw_counters(Board board){
 	
 	//Converter valores de board -> points, board -> plays e board -> time para string
-	graphtext2(); //Points
-	graphtext2(); //Plays
-	graphtext2(); //Time
+	//graphtext2(); //Points
+	//graphtext2(); //Plays
+	//graphtext2(); //Time
 	
 }
