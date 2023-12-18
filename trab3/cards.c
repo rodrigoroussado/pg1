@@ -9,7 +9,7 @@
 
 
 //Variáveis globais
-int curr_card_visible = true;
+
 
 
 void addPile(Board *board, Pile pile){
@@ -69,6 +69,7 @@ void boardInit(Board *board){
 	board->nPiles = 0;
 	board->plays = 0;
 	board->points = 0;
+	board->tempo_jogo = 0;
 	
 	addPile(board, pileInit(PILETYPE_DOWN, 0, X_DECK_STACK, Y_DECK_STACK)); //Deck pile
  	criarBaralhoOrdenado(&board->piles[0]);
@@ -80,6 +81,14 @@ void boardInit(Board *board){
 	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK1, Y_FOUNDATION_STACK1));
 	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK2, Y_FOUNDATION_STACK2));
 	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK3, Y_FOUNDATION_STACK3));
+	
+	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK0, Y_CARD_STACK0));
+	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK1, Y_CARD_STACK1));
+	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK2, Y_CARD_STACK2));
+	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK3, Y_CARD_STACK3));
+	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK4, Y_CARD_STACK4));
+	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK5, Y_CARD_STACK5));
+	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK6, Y_CARD_STACK6));
 
 }
 
@@ -121,30 +130,21 @@ bool transferirCarta(Pile *pi, Pile *pf){
 }
 
 
+void incrementarPontos(Board *board){
+	
+	board->points++;
+	
+}
 
-bool getCardName(int suit, int value, bool visible, char cardName[]) {
-	
-	//Buscar os nipes ( d = ouros; h = copas; c= paus; s = espadas)
-	char suits[] = { 'd', 'h', 's', 'c' };	
-	
-	//Buscar os 13 valores	( t = 10; q = rainha; j = valete; k = rei; a = Ás)								
+
+bool getCardName(Card c, char cardName[]) {
+	char suits[] = { 'd', 'h', 's', 'c' };
 	char values[] = { '2','3','4','5','6','7','8','9','t','q','j','k','a'};
 
-	//Se a carta não for visivel damos print na carta virada ao contrario
-	//Em que o primeiro %s é o nipe e o segundo %s é o valor
-	//Neste caso o %s sendo a parte de tras da carta será "b" e nao terá valor logo o segundo %s refere o tipo da imagem (.png)
-  	if ( !visible ) sprintf(cardName, "%s%s", CARD_BACK, IMAGE_TYPE);
-  	
-
+  	if ( ! c.visible ) sprintf(cardName, "%s%s", CARD_BACK, IMAGE_TYPE);
   	else {
-
-		//Se os valores nao tiverem dentro dos intervalos damos false
-		if ( suit < 0 || suit >= MAX_SUIT || value < 0 || value >= MAX_VALUE ) {return false;}
-		
-		//Se passar por todos os testes escrevemos a carta
-		//Aqui o priemiro %c sera o nipe, o segundo %c será o valor e o %s sera o tipo da imagem (.png)
-		sprintf(cardName, "%c%c%s", suits[suit], values[value], IMAGE_TYPE);
+	  if ( c.suit < 0 || c.suit >= MAX_SUIT || c.value < 0 || c.value >= MAX_VALUE ) return false;
+	  sprintf(cardName, "%c%c%s", suits[c.suit], values[c.value], IMAGE_TYPE);
 	}
 	return true;
 }
-

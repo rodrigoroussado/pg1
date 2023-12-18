@@ -6,9 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <time.h>
-
-#define TIME_TICK 1
+#include <time.h> 
 
 #define PILETYPE_TOP 0
 #define PILETYPE_DOWN 1
@@ -23,12 +21,17 @@
 
 #define IMAGE_TYPE 	".png"
 #define CARD_BACK	"b"
+#define DIR_IMAGES "cards/"
+#define MAX_FILENAME 100
+
+#define MAX_CARD_NAME 10
 
 
 typedef struct{
 	
 	int suit;	//naipe - 0 a 3
 	int value;	//valor - 0 a 12
+	bool visible;
 	
 	}Card;
 	
@@ -51,7 +54,7 @@ typedef struct{
 	Pile piles[MAX_PILES];
 	int points;
 	int plays;
-	//Contador de tempo aqui!
+	int tempo_jogo;
 	
 	}Board;
 	
@@ -76,11 +79,6 @@ void baralhar();
 //Função que regista os eventos do rato
 //void mouseEventHandler(MouseEvent me)
 
-
-//Função que "traduz" a struct da carta para o ficheiro correspondente
-bool getCardName(int suit, int value, bool visible, char cardName[]);
-
-
 //Função que baralha o deck
 void shuffle(Pile *pile);
 
@@ -96,5 +94,15 @@ void addPile(Board *board, Pile pile);
 //Função que copia uma pile para outra
 void copyCards(Pile pile_inicial, Pile *pile_final);
 
+
+//Função que escreve uma carta no board
+bool writeCard(Card c);
+
+
+//Função que incrementa os pontos
+void incrementarPontos(Board *board);
+
+//Função que procura a carta correspondente à struct
+bool getCardName(Card c, char cardName[]);
 
 #endif

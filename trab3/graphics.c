@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+
 //Desenhar o tabuleiro
 void background_draw(){
 	
@@ -46,9 +47,9 @@ void background_draw(){
 
 void draw_board(Board *board){
 	
-	background_draw(); //Desenhar os elementos estáticos
-	//draw_counters();   //Desenhar os contadores de pontos, jogadas e tempo
-	//draw_cards
+	background_draw(); 	 //Desenhar os elementos estáticos
+	draw_counters(*board);   //Desenhar os contadores de pontos, jogadas e tempo
+	//draw_cards(board);
 	
 }
 
@@ -56,9 +57,27 @@ void draw_board(Board *board){
 
 void draw_counters(Board board){
 	
-	//Converter valores de board -> points, board -> plays e board -> time para string
-	//graphtext2(); //Points
-	//graphtext2(); //Plays
-	//graphtext2(); //Time
+	//Plays
+	char string_plays[MAX_STRING_PLAYS];
+	sprintf(string_plays, "%d", board.plays);
+	graph_text2(X_PLAYS_VALUE, Y_PLAYS_VALUE, c_black, c_gray, string_plays, MEDIUM_FONT);
 	
+	//Time
+	char string_time[MAX_STRING_TIME];
+	int minutos = 0;
+	int segundos = 0;
+	timeConvert(board.tempo_jogo, &minutos, &segundos);
+	sprintf(string_time, "%02d:%02d", minutos, segundos);
+	graph_text2(X_TIMER_VALUE, Y_TIMER_VALUE, c_black, c_gray, string_time, MEDIUM_FONT);
+	
+	//Points
+	
+}
+
+
+void timeConvert(int valor_int, int *minutos, int *segundos){
+	
+	*minutos = valor_int/60;
+	*segundos = valor_int%60;
+
 }
