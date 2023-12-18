@@ -34,9 +34,8 @@
 /*Zona de plays*/
 #define X_PLAYS_LABEL 25
 #define Y_PLAYS_LABEL 50
-#define X_PLAYS_VALUE 100
+#define X_PLAYS_VALUE 115
 #define Y_PLAYS_VALUE 50
-
 #define X_PLAYS_RECT 75
 #define Y_PLAYS_RECT 25
 #define PLAYS_RECT_WIDTH 75
@@ -45,11 +44,12 @@
 /*Zona de points*/
 #define X_POINTS_LABEL 310
 #define Y_POINTS_LABEL 50
-
 #define X_POINTS_RECT 370
 #define Y_POINTS_RECT 25
 #define POINTS_RECT_WIDTH 75
 #define POINTS_RECT_HEIGHT 40
+#define X_POINTS_VALUE 410
+#define Y_POINTS_VALUE 50
 
 /*Zona de temporizador*/
 #define X_TIMER_RECT 700
@@ -103,9 +103,13 @@
 #define CARD_WIDTH 73
 #define CARD_HEIGHT 97
 
-/*Máximo de caracteres para representar as jogadas*/
+/*Tamanho do nome das cartas*/
+#define MAX_CARD_NAME 10
+
+/*Máximo de caracteres para representar os valores dos contadores*/
 #define MAX_STRING_PLAYS 4
 #define MAX_STRING_TIME 6
+#define MAX_STRING_POINTS 4
 
 
 /*Função que desenha o fundo do tabuleiro de jogo*/
@@ -115,10 +119,13 @@ void background_draw();
 void draw_board(Board *board);
 
 /*Função que desenha os contadores de jogadas, pontos e tempo*/
-void draw_counters(Board board);
+void draw_counters(Board *board);
 
 /*Função que converte um inteiro para char*/
 void timeConvert(int valor_int, int *minutos, int *segundos);
+
+/*Função que desenha as cartas do baralho*/
+bool draw_cards(Board *board);
 
 
 #endif

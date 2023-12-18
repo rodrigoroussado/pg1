@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <time.h> 
 
-#define PILETYPE_TOP 0
-#define PILETYPE_DOWN 1
+#define PILETYPE_DOWN 0 //mostra a carta
+#define PILETYPE_TOP 1 //mostra a back
 #define PILETYPE_MIX 2
 
 #define MAX_CARDS 53
@@ -23,8 +23,6 @@
 #define CARD_BACK	"b"
 #define DIR_IMAGES "cards/"
 #define MAX_FILENAME 100
-
-#define MAX_CARD_NAME 10
 
 
 typedef struct{

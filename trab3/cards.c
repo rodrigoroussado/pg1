@@ -8,10 +8,6 @@
 #include <stdbool.h>
 
 
-//Variáveis globais
-
-
-
 void addPile(Board *board, Pile pile){
 	
 	board->piles[board->nPiles++] = pile;
@@ -71,11 +67,11 @@ void boardInit(Board *board){
 	board->points = 0;
 	board->tempo_jogo = 0;
 	
-	addPile(board, pileInit(PILETYPE_DOWN, 0, X_DECK_STACK, Y_DECK_STACK)); //Deck pile
+	addPile(board, pileInit(PILETYPE_TOP, 0, X_DECK_STACK, Y_DECK_STACK)); //Deck pile
  	criarBaralhoOrdenado(&board->piles[0]);
 	shuffle(&board->piles[0]);
 
-	addPile(board, pileInit(PILETYPE_TOP, 0, X_DISCARD_STACK, Y_DISCARD_STACK)); //Discard pile
+	addPile(board, pileInit(PILETYPE_DOWN, 1, X_DISCARD_STACK, Y_DISCARD_STACK)); //Discard pile
 	
 	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK0, Y_FOUNDATION_STACK0));
 	addPile(board, pileInit(PILETYPE_DOWN, 0, X_FOUNDATION_STACK1, Y_FOUNDATION_STACK1));
@@ -89,6 +85,7 @@ void boardInit(Board *board){
 	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK4, Y_CARD_STACK4));
 	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK5, Y_CARD_STACK5));
 	addPile(board, pileInit(PILETYPE_MIX, 1, X_CARD_STACK6, Y_CARD_STACK6));
+	
 
 }
 

@@ -47,30 +47,33 @@ void background_draw(){
 
 void draw_board(Board *board){
 	
-	background_draw(); 	 //Desenhar os elementos estáticos
-	draw_counters(*board);   //Desenhar os contadores de pontos, jogadas e tempo
-	//draw_cards(board);
+	background_draw(); 	 	 //Desenhar os elementos estáticos
+	draw_counters(board);   //Desenhar os contadores de pontos, jogadas e tempo
+	draw_cards(board);		 //Desenhar as cartas
 	
 }
 
 
 
-void draw_counters(Board board){
+void draw_counters(Board *board){
 	
 	//Plays
 	char string_plays[MAX_STRING_PLAYS];
-	sprintf(string_plays, "%d", board.plays);
+	sprintf(string_plays, "%d", board->plays);
 	graph_text2(X_PLAYS_VALUE, Y_PLAYS_VALUE, c_black, c_gray, string_plays, MEDIUM_FONT);
 	
 	//Time
 	char string_time[MAX_STRING_TIME];
 	int minutos = 0;
 	int segundos = 0;
-	timeConvert(board.tempo_jogo, &minutos, &segundos);
+	timeConvert(board->tempo_jogo, &minutos, &segundos);
 	sprintf(string_time, "%02d:%02d", minutos, segundos);
 	graph_text2(X_TIMER_VALUE, Y_TIMER_VALUE, c_black, c_gray, string_time, MEDIUM_FONT);
 	
 	//Points
+	char string_points[MAX_STRING_POINTS];
+	sprintf(string_points, "%d", board->points);
+	graph_text2(X_POINTS_VALUE, Y_POINTS_VALUE, c_black, c_gray, string_points, MEDIUM_FONT);
 	
 }
 
@@ -80,4 +83,58 @@ void timeConvert(int valor_int, int *minutos, int *segundos){
 	*minutos = valor_int/60;
 	*segundos = valor_int%60;
 
+}
+
+
+Card topCard(Pile *p){
+	
+	return p->cards[p->nCards-1];
+	
+}
+
+
+bool draw_pile(Pile *p){
+	
+	char cardName[MAX_CARD_NAME];
+	int sz = strlen(DIR_IMAGES) + strlen(cardName) + 1;
+	char filename[sz];
+	
+	
+	switch(p->pileType){
+			
+		case PILETYPE_TOP:
+			if(!getCardName(topCard(p), cardName)){return false;}
+			sprintf(filename, "%s%s", DIR_IMAGES, cardName);
+			graph_image(filename, p->x, p->y, CARD_WIDTH, CARD_HEIGHT);
+			break;
+			
+			
+		case PILETYPE_DOWN:
+			sz = strlen(DIR_IMAGES) + strlen(CARD_BACK) + 1;
+			sprintf(filename, "%s%s", DIR_IMAGES, CARD_BACK);
+			graph_image(filename, p->x, p->y, CARD_WIDTH, CARD_HEIGHT);
+			break;
+			
+			
+		/*case PILETYPE_MIX:
+			
+			break;
+		*/
+	}
+	
+	return true;
+	
+}
+
+
+bool draw_cards(Board *board){
+	
+	for(int i = 0; i < board->nPiles; i++){
+		
+		if(!draw_pile(&board->piles[i])){return false;}
+		
+	}
+	
+	return true;
+	
 }
