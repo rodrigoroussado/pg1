@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <time.h> 
 
-#define PILETYPE_DOWN 0 //mostra a carta
-#define PILETYPE_TOP 1 //mostra a back
+#define PILETYPE_DOWN 1 //mostra a back
+#define PILETYPE_TOP 0  //mostra a carta
 #define PILETYPE_MIX 2
 
 #define MAX_CARDS 53
@@ -61,41 +61,29 @@ typedef struct{
 //Função que inicia o board
 void boardInit(Board *board);
 
-
 //Função que cria o baralho ordenado num array
 void criarBaralhoOrdenado();
 
-
 //Função que transfere x cartas de uma pilha para a outra
-bool transferirCarta(Pile *pi, Pile *pf);
-
+bool transferirCarta(Board *board, int ind_pi, int ind_pf);
 
 //Função que ordena as cartas de forma aleatória
 void baralhar();
 
-
-//Função que regista os eventos do rato
-//void mouseEventHandler(MouseEvent me)
-
 //Função que baralha o deck
 void shuffle(Pile *pile);
-
 
 //Função que inicializa uma pile
 Pile pileInit(int pileType, int nVisible, int x, int y);
 
-
 //Função que adiciona uma pile ao board
 void addPile(Board *board, Pile pile);
-
 
 //Função que copia uma pile para outra
 void copyCards(Pile pile_inicial, Pile *pile_final);
 
-
 //Função que escreve uma carta no board
 bool writeCard(Card c);
-
 
 //Função que incrementa os pontos
 void incrementarPontos(Board *board);
