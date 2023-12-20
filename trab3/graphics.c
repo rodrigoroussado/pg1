@@ -1,157 +1,131 @@
+#ifndef __GRAPHICS_H__
+#define __GRAPHICS_H__
+
+
 //Fazer includes
 #include "pg/pglib.h"
-#include "graphics.h"
+#include "cards.h"
 #include <stdio.h>
 #include <stdbool.h>
 
-#define DEBUG 1
 
-//Desenhar o tabuleiro
-void background_draw(){
-	
-	graph_rect(0, 0, MAX_WIDTH, MAX_HEIGHT, BACKGROUND_COLOR, true); 					//Fundo
-	graph_rect(X1_INFO, Y1_INFO, INFO_WIDTH, INFO_HEIGHT, PANEL_COLOR, true);    		//Painel de informações
-	graph_rect(X1_STACKS, Y1_STACKS, STACKS_WIDTH, STACKS_HEIGHT, PANEL_COLOR, true);  	//Zona de stacks
-	
-	//Zona de informação de "Plays"
-	graph_text2(X_PLAYS_LABEL,Y_PLAYS_LABEL, c_orange, PANEL_COLOR, "Plays", MEDIUM_FONT);
-	graph_rect(X_PLAYS_RECT, Y_PLAYS_RECT, PLAYS_RECT_WIDTH, PLAYS_RECT_HEIGHT, c_gray, true);
-	
-	//Zona de informação de "Points"
-	graph_text2(X_POINTS_LABEL, Y_POINTS_LABEL, c_orange, PANEL_COLOR, "Points", MEDIUM_FONT);
-	graph_rect(X_POINTS_RECT, Y_POINTS_RECT, POINTS_RECT_WIDTH, POINTS_RECT_HEIGHT, c_gray, true);
-	
-	//Zona de informação de tempo
-	graph_rect(X_TIMER_RECT, Y_TIMER_RECT, TIMER_RECT_WIDTH, TIMER_RECT_HEIGHT, c_gray, true);
-	
-	//Sombras (stacks vazias)
-	graph_rect(X_DECK_STACK, Y_DECK_STACK, CARD_WIDTH, CARD_HEIGHT, c_white, false); 		//Deck Stack
-	graph_rect(X_DISCARD_STACK, Y_DISCARD_STACK, CARD_WIDTH, CARD_HEIGHT, c_white, false);  //Discard Stack
-	
-	graph_rect(X_FOUNDATION_STACK0, Y_FOUNDATION_STACK0, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_FOUNDATION_STACK1, Y_FOUNDATION_STACK1, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_FOUNDATION_STACK2, Y_FOUNDATION_STACK2, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_FOUNDATION_STACK3, Y_FOUNDATION_STACK3, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	
-	graph_rect(X_CARD_STACK0, Y_CARD_STACK0, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_CARD_STACK1, Y_CARD_STACK1, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_CARD_STACK2, Y_CARD_STACK2, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_CARD_STACK3, Y_CARD_STACK3, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_CARD_STACK4, Y_CARD_STACK4, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_CARD_STACK5, Y_CARD_STACK5, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	graph_rect(X_CARD_STACK6, Y_CARD_STACK6, CARD_WIDTH, CARD_HEIGHT, c_white, false);
-	
-	return;
-	
-}
+//Definir constantes
 
+/*Tamanho da janela*/
+#define MAX_WIDTH 820
+#define MAX_HEIGHT 820
 
-void draw_board(Board *board){
-	
-	//background_draw(); 	 	 //Desenhar os elementos estáticos
-	draw_counters(board);   //Desenhar os contadores de pontos, jogadas e tempo
-	draw_cards(board);		 //Desenhar as cartas
-	
-}
+/*Definir cores*/
+#define BACKGROUND_COLOR graph_rgb(41,153,97)
+#define PANEL_COLOR graph_rgb(64,64,64)
 
+/*Painel de informações*/
+#define X1_INFO 20
+#define Y1_INFO 20
+#define INFO_WIDTH 780
+#define INFO_HEIGHT 50
 
+/*Zona de stacks*/
+#define X1_STACKS 20
+#define Y1_STACKS 200
+#define STACKS_WIDTH 780
+#define STACKS_HEIGHT 600
 
-void draw_counters(Board *board){
-	
-	//Plays
-	char string_plays[MAX_STRING_PLAYS];
-	sprintf(string_plays, "%d", board->plays);
-	graph_text2(X_PLAYS_VALUE, Y_PLAYS_VALUE, c_black, c_gray, string_plays, MEDIUM_FONT);
-	
-	//Time
-	char string_time[MAX_STRING_TIME];
-	int minutos = 0;
-	int segundos = 0;
-	timeConvert(board->tempo_jogo, &minutos, &segundos);
-	sprintf(string_time, "%02d:%02d", minutos, segundos);
-	graph_text2(X_TIMER_VALUE, Y_TIMER_VALUE, c_black, c_gray, string_time, MEDIUM_FONT);
-	
-	//Points
-	char string_points[MAX_STRING_POINTS];
-	sprintf(string_points, "%d", board->points);
-	graph_text2(X_POINTS_VALUE, Y_POINTS_VALUE, c_black, c_gray, string_points, MEDIUM_FONT);
-	
-}
+/*Zona de plays*/
+#define X_PLAYS_LABEL 25
+#define Y_PLAYS_LABEL 50
+#define X_PLAYS_VALUE 115
+#define Y_PLAYS_VALUE 50
+#define X_PLAYS_RECT 75
+#define Y_PLAYS_RECT 25
+#define PLAYS_RECT_WIDTH 75
+#define PLAYS_RECT_HEIGHT 40
 
+/*Zona de points*/
+#define X_POINTS_LABEL 310
+#define Y_POINTS_LABEL 50
+#define X_POINTS_RECT 370
+#define Y_POINTS_RECT 25
+#define POINTS_RECT_WIDTH 75
+#define POINTS_RECT_HEIGHT 40
+#define X_POINTS_VALUE 410
+#define Y_POINTS_VALUE 50
 
-void timeConvert(int valor_int, int *minutos, int *segundos){
-	
-	*minutos = valor_int/60;
-	*segundos = valor_int%60;
+/*Zona de temporizador*/
+#define X_TIMER_RECT 700
+#define Y_TIMER_RECT 25
+#define TIMER_RECT_WIDTH 80
+#define TIMER_RECT_HEIGHT 40
+#define X_TIMER_VALUE 715
+#define Y_TIMER_VALUE 50
 
-}
+/*Locais das pilhas*/
+#define X_DECK_STACK 20
+#define Y_DECK_STACK 85
 
+#define X_DISCARD_STACK 126
+#define Y_DISCARD_STACK 85
 
-Card topCard(Pile *p){
-	
-	return p->cards[p->nCards-1];
-	
-}
+#define X_FOUNDATION_STACK0 409
+#define Y_FOUNDATION_STACK0 85
 
+#define X_FOUNDATION_STACK1 515
+#define Y_FOUNDATION_STACK1 85
 
-bool draw_pile(Pile *p){
-	
-	char cardName[MAX_CARD_NAME];
-	char filename[MAX_FILENAME] = {0};/*"cards/d2.png"*/
-	
-	
-	switch(p->pileType){
-			
-		case PILETYPE_TOP:
-			graph_image(filename, 400, 100, CARD_WIDTH, CARD_HEIGHT);
-			printf("nCards = %d\n", p->nCards);
-			if(p->nCards == 0){/*return false;*/}
-			if(!getCardName(topCard(p), cardName)){return false;}
-			
-			#if DEBUG
-			printf("Card name TOP: |%s|\n", cardName);
-			#endif
-			
-			sprintf(filename, "%s%s", DIR_IMAGES, cardName);
-			
-			#if DEBUG
-			printf("Filename TOP: |%s|\n", filename);
-			#endif
-			
-			graph_image(filename, p->x, p->y, CARD_WIDTH, CARD_HEIGHT);
-			break;
-			
-			
-		case PILETYPE_DOWN:
-			sprintf(filename, "%s%s%s", DIR_IMAGES, CARD_BACK, IMAGE_TYPE);
-			
-			#if DEBUG
-			printf("Filename DOWN: %s\n",filename);
-			#endif
-			
-			graph_image(filename, p->x, p->y, CARD_WIDTH, CARD_HEIGHT);
-			break;
-			
-			
-		case PILETYPE_MIX:
-			
-			break;
-		
-	}
-	
-	return true;
-	
-}
+#define X_FOUNDATION_STACK2 621
+#define Y_FOUNDATION_STACK2 85
+
+#define X_FOUNDATION_STACK3 727
+#define Y_FOUNDATION_STACK3 85
+
+#define X_CARD_STACK0 53
+#define Y_CARD_STACK0 220
+
+#define X_CARD_STACK1 159
+#define Y_CARD_STACK1 220
+
+#define X_CARD_STACK2 265
+#define Y_CARD_STACK2 220
+
+#define X_CARD_STACK3 371
+#define Y_CARD_STACK3 220
+
+#define X_CARD_STACK4 477
+#define Y_CARD_STACK4 220
+
+#define X_CARD_STACK5 583
+#define Y_CARD_STACK5 220
+
+#define X_CARD_STACK6 689
+#define Y_CARD_STACK6 220
+
+/*Tamanho das cartas*/
+#define CARD_WIDTH 73
+#define CARD_HEIGHT 97
+
+/*Tamanho do nome das cartas*/
+#define MAX_CARD_NAME 10
+
+/*Máximo de caracteres para representar os valores dos contadores*/
+#define MAX_STRING_PLAYS 4
+#define MAX_STRING_TIME 6
+#define MAX_STRING_POINTS 4
 
 
-bool draw_cards(Board *board){
-	
-	for(int i = 0; i < board->nPiles; i++){
-		
-		if(!draw_pile(&board->piles[i])){return false;}
-		
-	}
-	
-	return true;
-	
-}
+/*Função que desenha o fundo do tabuleiro de jogo*/
+void background_draw();
+
+/*Função que desenha todo o board (elementos estáticos e móveis)*/
+void draw_board(Board *board);
+
+/*Função que desenha os contadores de jogadas, pontos e tempo*/
+void draw_counters(Board *board);
+
+/*Função que converte um inteiro para char*/
+void timeConvert(int valor_int, int *minutos, int *segundos);
+
+/*Função que desenha as cartas do baralho*/
+bool draw_cards(Board *board);
+
+
+#endif
