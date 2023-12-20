@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define DEBUG 1
 
 //Desenhar o tabuleiro
 void background_draw(){
@@ -47,7 +48,7 @@ void background_draw(){
 
 void draw_board(Board *board){
 	
-	background_draw(); 	 	 //Desenhar os elementos estáticos
+	//background_draw(); 	 	 //Desenhar os elementos estáticos
 	draw_counters(board);   //Desenhar os contadores de pontos, jogadas e tempo
 	draw_cards(board);		 //Desenhar as cartas
 	
@@ -96,30 +97,46 @@ Card topCard(Pile *p){
 bool draw_pile(Pile *p){
 	
 	char cardName[MAX_CARD_NAME];
-	int sz = strlen(DIR_IMAGES) + strlen(cardName) + 1;
-	char filename[sz];
+	char filename[MAX_FILENAME] = {0};/*"cards/d2.png"*/
 	
 	
 	switch(p->pileType){
 			
 		case PILETYPE_TOP:
+			graph_image(filename, 400, 100, CARD_WIDTH, CARD_HEIGHT);
+			printf("nCards = %d\n", p->nCards);
+			if(p->nCards == 0){/*return false;*/}
 			if(!getCardName(topCard(p), cardName)){return false;}
+			
+			#if DEBUG
+			printf("Card name TOP: |%s|\n", cardName);
+			#endif
+			
 			sprintf(filename, "%s%s", DIR_IMAGES, cardName);
+			
+			#if DEBUG
+			printf("Filename TOP: |%s|\n", filename);
+			#endif
+			
 			graph_image(filename, p->x, p->y, CARD_WIDTH, CARD_HEIGHT);
 			break;
 			
 			
 		case PILETYPE_DOWN:
-			sz = strlen(DIR_IMAGES) + strlen(CARD_BACK) + 1;
-			sprintf(filename, "%s%s", DIR_IMAGES, CARD_BACK);
+			sprintf(filename, "%s%s%s", DIR_IMAGES, CARD_BACK, IMAGE_TYPE);
+			
+			#if DEBUG
+			printf("Filename DOWN: %s\n",filename);
+			#endif
+			
 			graph_image(filename, p->x, p->y, CARD_WIDTH, CARD_HEIGHT);
 			break;
 			
 			
-		/*case PILETYPE_MIX:
+		case PILETYPE_MIX:
 			
 			break;
-		*/
+		
 	}
 	
 	return true;
